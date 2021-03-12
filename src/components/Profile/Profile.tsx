@@ -6,10 +6,10 @@ import MyPosts from "./MyPosts/MyPosts";
 
 function Profile() {
     return (
-        <div className={classes.content}>
-            <div>
+        <div>
+            <div className={classes.wrapper}>
                 <img
-                    src="https://img3.goodfon.ru/original/1920x1200/a/f0/pesok-plyazh-sledy-more-palmy.jpg"
+                    src="https://i.pinimg.com/originals/0e/8b/a6/0e8ba6473ec93fa8b6cbba9179b31bd7.jpg"
                     alt="wrapper"
                 />
             </div>

@@ -2,14 +2,17 @@ import React from "react";
 
 import "./App.scss";
 
-import { Header, Navbar, Profile } from "./components";
+import { Header, Navbar, Profile, Dialogs } from "./components";
 
 function App() {
     return (
         <div className="app-wrapper">
             <Header />
             <Navbar />
-            <Profile />
+            <div className="app-wrapper--content">
+                <Profile />
+                <Dialogs />
+            </div>
         </div>
     );
 }
