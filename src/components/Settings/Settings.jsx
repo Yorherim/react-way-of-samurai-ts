@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Settings.module.scss";
 
-function Dialogs() {
+function Settings() {
     return <div>Settings</div>;
 }
 

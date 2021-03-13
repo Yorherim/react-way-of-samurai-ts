@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./Music.module.scss";
 
-function Dialogs() {
+function Music() {
     return <div>Music</div>;
 }
 
