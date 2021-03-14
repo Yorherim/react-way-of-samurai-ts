@@ -6,15 +6,18 @@ import Post from "./Post/Post";
 
 function MyPosts() {
     return (
-        <div>
-            my posts
+        <div className={classes.postsBlock}>
+            <h3>My posts</h3>
             <div>
-                <textarea placeholder={"Some writing..."}></textarea>
+                <div>
+                    <textarea />
+                </div>
                 <button>Add post</button>
             </div>
+
             <div className={classes.posts}>
-                <Post message="Hello" likesCount={23} />
-                <Post message="Hi" likesCount={17} />
+                <Post message="Hello" likesCount={9} />
+                <Post message="Hi" likesCount={7} />
             </div>
         </div>
     );

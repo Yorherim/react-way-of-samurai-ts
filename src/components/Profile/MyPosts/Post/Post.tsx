@@ -7,7 +7,7 @@ type PostPropsType = {
     likesCount: number;
 };
 
-const Post: React.FC<PostPropsType> = ({ message, likesCount }) => {
+function Post({ message, likesCount }: PostPropsType) {
     return (
         <div className={classes.item}>
             <img
@@ -16,10 +16,10 @@ const Post: React.FC<PostPropsType> = ({ message, likesCount }) => {
             />
             {message}
             <div>
-                <span>like</span> {likesCount}
+                <span>like {likesCount}</span>
             </div>
         </div>
     );
-};
+}
 
 export default Post;
