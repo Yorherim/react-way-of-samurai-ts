@@ -6,8 +6,13 @@
     padding: 10px;
 
     .item {
-      &.active {
-        color: gold;
+      a {
+        text-decoration: none;
+        color: white;
+
+        &.active {
+          color: gold;
+        }
       }
     }
   }
