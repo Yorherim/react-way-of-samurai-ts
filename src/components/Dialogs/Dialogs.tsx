@@ -5,41 +5,25 @@ import classes from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-type DialogsType = {
-    id: number;
-    name: string;
+import { DialogsType, MessagesType } from "../../index";
+
+type DialogsPropsType = {
+    dialogs: Array<DialogsType>;
+    messages: Array<MessagesType>;
 };
 
-type MessagesType = {
-    id: number;
-    message: string;
-};
-
-const dialogsData: Array<DialogsType> = [
-    { id: 1, name: "Dima" },
-    { id: 2, name: "Oleg" },
-    { id: 3, name: "Sveta" },
-    { id: 4, name: "Valera" },
-];
-
-const messagesData: Array<MessagesType> = [
-    { id: 1, message: "Hi" },
-    { id: 2, message: "Hello" },
-    { id: 3, message: "What's up?" },
-];
-
-function Dialogs() {
+function Dialogs({ dialogs, messages }: DialogsPropsType) {
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogs_items}>
-                {dialogsData.map((d) => (
-                    <DialogItem name={d.name} id={d.id} />
+                {dialogs.map((d) => (
+                    <DialogItem key={d.id} name={d.name} id={d.id} />
                 ))}
             </div>
 
             <div className={classes.messages}>
-                {messagesData.map((m) => (
-                    <Message message={m.message} />
+                {messages.map((m) => (
+                    <Message key={m.id} message={m.message} />
                 ))}
             </div>
         </div>

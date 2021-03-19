@@ -13,14 +13,31 @@ import {
     Settings,
 } from "./components";
 
-function App() {
+//types
+import { MessagesType, DialogsType, PostsType } from "./index";
+
+type AppPropsType = {
+    messages: Array<MessagesType>;
+    dialogs: Array<DialogsType>;
+    posts: Array<PostsType>;
+};
+
+function App({ messages, dialogs, posts }: AppPropsType) {
     return (
         <div className="app-wrapper">
             <Header />
             <Navbar />
             <div className="app-wrapper--content">
-                <Route path="/profile" component={Profile} />
-                <Route path="/dialogs" component={Dialogs} />
+                <Route
+                    path="/profile"
+                    render={() => <Profile posts={posts} />}
+                />
+                <Route
+                    path="/dialogs"
+                    render={() => (
+                        <Dialogs dialogs={dialogs} messages={messages} />
+                    )}
+                />
                 <Route path="/news" component={News} />
                 <Route path="/music" component={Music} />
                 <Route path="/settings" component={Settings} />

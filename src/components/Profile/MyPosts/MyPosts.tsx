@@ -4,18 +4,13 @@ import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
 
-type PostsType = {
-    id: number;
-    message: string;
-    likesCount: number;
+import { PostsType } from "../../../index";
+
+type MyPostsPropsType = {
+    posts: Array<PostsType>;
 };
 
-const postsData: Array<PostsType> = [
-    { id: 1, message: "Hello", likesCount: 9 },
-    { id: 2, message: "Hi", likesCount: 7 },
-];
-
-function MyPosts() {
+function MyPosts({ posts }: MyPostsPropsType) {
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
@@ -27,8 +22,12 @@ function MyPosts() {
             </div>
 
             <div className={classes.posts}>
-                {postsData.map((p) => (
-                    <Post message={p.message} likesCount={p.likesCount} />
+                {posts.map((p) => (
+                    <Post
+                        key={p.id}
+                        message={p.message}
+                        likesCount={p.likesCount}
+                    />
                 ))}
             </div>
         </div>
