@@ -4,6 +4,17 @@ import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
 
+type PostsType = {
+    id: number;
+    message: string;
+    likesCount: number;
+};
+
+const postsData: Array<PostsType> = [
+    { id: 1, message: "Hello", likesCount: 9 },
+    { id: 2, message: "Hi", likesCount: 7 },
+];
+
 function MyPosts() {
     return (
         <div className={classes.postsBlock}>
@@ -16,8 +27,14 @@ function MyPosts() {
             </div>
 
             <div className={classes.posts}>
-                <Post message="Hello" likesCount={9} />
-                <Post message="Hi" likesCount={7} />
+                <Post
+                    message={postsData[0].message}
+                    likesCount={postsData[0].likesCount}
+                />
+                <Post
+                    message={postsData[1].message}
+                    likesCount={postsData[1].likesCount}
+                />
             </div>
         </div>
     );
