@@ -4,10 +4,10 @@ import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
 
-import { PostsType } from "../../../index";
+import { PostType } from "../../../redux/state";
 
 type MyPostsPropsType = {
-    posts: Array<PostsType>;
+    posts: Array<PostType>;
 };
 
 function MyPosts({ posts }: MyPostsPropsType) {

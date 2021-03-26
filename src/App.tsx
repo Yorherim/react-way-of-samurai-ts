@@ -14,15 +14,14 @@ import {
 } from "./components";
 
 //types
-import { MessagesType, DialogsType, PostsType } from "./index";
+import { DialogsPageType, ProfilePageType } from "./redux/state";
 
 type AppPropsType = {
-    messages: Array<MessagesType>;
-    dialogs: Array<DialogsType>;
-    posts: Array<PostsType>;
+    profilePage: ProfilePageType;
+    dialogsPage: DialogsPageType;
 };
 
-function App({ messages, dialogs, posts }: AppPropsType) {
+function App({ profilePage, dialogsPage }: AppPropsType) {
     return (
         <div className="app-wrapper">
             <Header />
@@ -30,12 +29,15 @@ function App({ messages, dialogs, posts }: AppPropsType) {
             <div className="app-wrapper--content">
                 <Route
                     path="/profile"
-                    render={() => <Profile posts={posts} />}
+                    render={() => <Profile posts={profilePage.postsData} />}
                 />
                 <Route
                     path="/dialogs"
                     render={() => (
-                        <Dialogs dialogs={dialogs} messages={messages} />
+                        <Dialogs
+                            dialogs={dialogsPage.dialogsData}
+                            messages={dialogsPage.messagesData}
+                        />
                     )}
                 />
                 <Route path="/news" component={News} />

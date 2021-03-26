@@ -5,11 +5,11 @@ import classes from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-import { DialogsType, MessagesType } from "../../index";
+import { DialogType, MessageType } from "../../redux/state";
 
 type DialogsPropsType = {
-    dialogs: Array<DialogsType>;
-    messages: Array<MessagesType>;
+    dialogs: Array<DialogType>;
+    messages: Array<MessageType>;
 };
 
 function Dialogs({ dialogs, messages }: DialogsPropsType) {
