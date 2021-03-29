@@ -19,9 +19,10 @@ import { DialogsPageType, ProfilePageType } from "./redux/state";
 type AppPropsType = {
     profilePage: ProfilePageType;
     dialogsPage: DialogsPageType;
+    addPost: (postMessage: string) => void;
 };
 
-function App({ profilePage, dialogsPage }: AppPropsType) {
+function App({ profilePage, dialogsPage, addPost }: AppPropsType) {
     return (
         <div className="app-wrapper">
             <Header />
@@ -29,7 +30,12 @@ function App({ profilePage, dialogsPage }: AppPropsType) {
             <div className="app-wrapper--content">
                 <Route
                     path="/profile"
-                    render={() => <Profile posts={profilePage.postsData} />}
+                    render={() => (
+                        <Profile
+                            posts={profilePage.postsData}
+                            addPost={addPost}
+                        />
+                    )}
                 />
                 <Route
                     path="/dialogs"

@@ -8,17 +8,19 @@ import { PostType } from "../../../redux/state";
 
 type MyPostsPropsType = {
     posts: Array<PostType>;
+    addPost: (postMessage: string) => void;
 };
 
-function MyPosts({ posts }: MyPostsPropsType) {
+function MyPosts({ posts, addPost }: MyPostsPropsType) {
     const newPost = createRef<HTMLTextAreaElement>();
 
-    const addPost = () => {
+    const addNewPost = () => {
         if (newPost.current?.value) {
-            alert(newPost.current.value);
+            addPost(newPost.current.value);
             newPost.current.value = "";
         }
     };
+
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
@@ -26,7 +28,7 @@ function MyPosts({ posts }: MyPostsPropsType) {
                 <div>
                     <textarea ref={newPost} />
                 </div>
-                <button onClick={addPost}>Add post</button>
+                <button onClick={addNewPost}>Add post</button>
             </div>
 
             <div className={classes.posts}>

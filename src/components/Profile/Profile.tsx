@@ -7,13 +7,14 @@ import { PostType } from "../../redux/state";
 
 type ProfilePropsType = {
     posts: Array<PostType>;
+    addPost: (postMessage: string) => void;
 };
 
-function Profile({ posts }: ProfilePropsType) {
+function Profile({ posts, addPost }: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts posts={posts} />
+            <MyPosts posts={posts} addPost={addPost} />
         </div>
     );
 }
