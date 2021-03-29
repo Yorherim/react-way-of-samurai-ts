@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 
-import { addPost, StateType } from "./redux/state";
+import { addPost, StateType, updateNewPostText } from "./redux/state";
 
 export const rerenderEntireTree = (state: StateType) => {
     console.log(state);
@@ -15,6 +15,7 @@ export const rerenderEntireTree = (state: StateType) => {
                     profilePage={state.profilePage}
                     dialogsPage={state.dialogsPage}
                     addPost={addPost}
+                    updateNewPostText={updateNewPostText}
                 />
             </BrowserRouter>
         </React.StrictMode>,

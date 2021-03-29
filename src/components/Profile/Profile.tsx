@@ -7,14 +7,26 @@ import { PostType } from "../../redux/state";
 
 type ProfilePropsType = {
     posts: Array<PostType>;
-    addPost: (postMessage: string) => void;
+    addPost: () => void;
+    updateNewPostText: (postText: string) => void;
+    newPostText: string;
 };
 
-function Profile({ posts, addPost }: ProfilePropsType) {
+function Profile({
+    posts,
+    addPost,
+    updateNewPostText,
+    newPostText,
+}: ProfilePropsType) {
     return (
         <div>
             <ProfileInfo />
-            <MyPosts posts={posts} addPost={addPost} />
+            <MyPosts
+                posts={posts}
+                addPost={addPost}
+                updateNewPostText={updateNewPostText}
+                newPostText={newPostText}
+            />
         </div>
     );
 }
