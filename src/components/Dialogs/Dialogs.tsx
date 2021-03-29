@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createRef } from "react";
 
 import classes from "./Dialogs.module.scss";
 
@@ -6,6 +6,7 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 import { DialogType, MessageType } from "../../redux/state";
+import { log } from "util";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>;
@@ -13,8 +14,14 @@ type DialogsPropsType = {
 };
 
 function Dialogs({ dialogs, messages }: DialogsPropsType) {
-    console.log("test");
-    console.log("test");
+    const newMessage = createRef<HTMLTextAreaElement>();
+
+    const addMessage = () => {
+        if (newMessage.current?.value) {
+            alert(newMessage.current.value);
+            newMessage.current.value = "";
+        }
+    };
 
     return (
         <div className={classes.dialogs}>
@@ -28,6 +35,11 @@ function Dialogs({ dialogs, messages }: DialogsPropsType) {
                 {messages.map((m) => (
                     <Message key={m.id} message={m.message} />
                 ))}
+
+                <div className={classes.textarea}>
+                    <textarea ref={newMessage} />
+                </div>
+                <button onClick={addMessage}>Add</button>
             </div>
         </div>
     );

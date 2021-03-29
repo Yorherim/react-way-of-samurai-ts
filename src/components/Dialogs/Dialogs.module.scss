@@ -1,14 +1,16 @@
 .dialogs {
-  display: grid;
-  grid-template-columns: 2fr 10fr;
+    display: grid;
+    grid-template-columns: 2fr 10fr;
 
-  &_items {
-    padding: 10px;
-  }
+    &_items {
+        padding: 10px;
+    }
 
-  .messages {
-    padding: 10px;
+    .messages {
+        padding: 10px;
+    }
 
-    .message {}
-  }
+    .textarea {
+        margin-top: 10px;
+    }
 }
