@@ -14,21 +14,15 @@ import {
 } from "./components";
 
 //types
-import { DialogsPageType, ProfilePageType } from "./redux/store";
+import { ActionsTypes, DialogsPageType, ProfilePageType } from "./redux/store";
 
 type AppPropsType = {
     profilePage: ProfilePageType;
     dialogsPage: DialogsPageType;
-    addPost: () => void;
-    updateNewPostText: (postText: string) => void;
+    dispatch: (action: ActionsTypes) => void;
 };
 
-function App({
-    profilePage,
-    dialogsPage,
-    addPost,
-    updateNewPostText,
-}: AppPropsType) {
+function App({ profilePage, dialogsPage, dispatch }: AppPropsType) {
     return (
         <div className="app-wrapper">
             <Header />
@@ -39,8 +33,7 @@ function App({
                     render={() => (
                         <Profile
                             posts={profilePage.postsData}
-                            addPost={addPost}
-                            updateNewPostText={updateNewPostText}
+                            dispatch={dispatch}
                             newPostText={profilePage.newPostText}
                         />
                     )}

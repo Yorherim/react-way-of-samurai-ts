@@ -14,8 +14,7 @@ export const rerenderEntireTree = (state: StateType) => {
                 <App
                     profilePage={store._state.profilePage}
                     dialogsPage={store._state.dialogsPage}
-                    addPost={store.addPost.bind(store)}
-                    updateNewPostText={store.updateNewPostText.bind(store)}
+                    dispatch={store.dispatch.bind(store)}
                 />
             </BrowserRouter>
         </React.StrictMode>,

@@ -1,5 +1,13 @@
 let rerenderEntireTree = (state: StateType) => {};
 
+type AddPostActionType = {
+    type: "ADD_POST";
+};
+type UpdateNewPostChangeActionType = {
+    type: "UPDATE_NEW_POST_TEXT";
+    postText: string;
+};
+export type ActionsTypes = AddPostActionType | UpdateNewPostChangeActionType;
 export type PostType = {
     id: number;
     message: string;
@@ -29,9 +37,8 @@ export type StoreType = {
     _state: StateType;
     getState: () => StateType;
     _callSubsriber: (state: StateType) => void;
-    addPost: () => void;
+    dispatch: (action: ActionsTypes) => void;
     subscribe: (observer: (state: StateType) => void) => void;
-    updateNewPostText: (postText: string) => void;
 };
 
 const store: StoreType = {
@@ -66,25 +73,24 @@ const store: StoreType = {
         console.log("state changed");
     },
 
-    addPost() {
-        const newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0,
-        };
-
-        this._state.profilePage.postsData.push(newPost);
-        this._state.profilePage.newPostText = "";
-        this._callSubsriber(this._state);
+    dispatch(action) {
+        if (action.type === "ADD_POST") {
+            const newPost: PostType = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0,
+            };
+            this._state.profilePage.postsData.push(newPost);
+            this._state.profilePage.newPostText = "";
+            this._callSubsriber(this._state);
+        } else if (action.type === "UPDATE_NEW_POST_TEXT") {
+            this._state.profilePage.newPostText = action.postText;
+            this._callSubsriber(this._state);
+        }
     },
 
     subscribe(observer) {
         this._callSubsriber = observer;
-    },
-
-    updateNewPostText(postText) {
-        this._state.profilePage.newPostText = postText;
-        this._callSubsriber(this._state);
     },
 };
 
