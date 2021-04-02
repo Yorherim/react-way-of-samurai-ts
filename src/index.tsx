@@ -5,22 +5,17 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.scss";
 
 import App from "./App";
-import state, {
-    addPost,
-    StateType,
-    updateNewPostText,
-    subscribe,
-} from "./redux/state";
+import store, { StateType } from "./redux/store";
 
 export const rerenderEntireTree = (state: StateType) => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    profilePage={state.profilePage}
-                    dialogsPage={state.dialogsPage}
-                    addPost={addPost}
-                    updateNewPostText={updateNewPostText}
+                    profilePage={store._state.profilePage}
+                    dialogsPage={store._state.dialogsPage}
+                    addPost={store.addPost.bind(store)}
+                    updateNewPostText={store.updateNewPostText.bind(store)}
                 />
             </BrowserRouter>
         </React.StrictMode>,
@@ -28,6 +23,6 @@ export const rerenderEntireTree = (state: StateType) => {
     );
 };
 
-rerenderEntireTree(state);
+rerenderEntireTree(store.getState());
 
-subscribe(rerenderEntireTree);
+store.subscribe(rerenderEntireTree);

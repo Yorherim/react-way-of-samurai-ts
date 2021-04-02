@@ -14,7 +14,7 @@ import {
 } from "./components";
 
 //types
-import { DialogsPageType, ProfilePageType } from "./redux/state";
+import { DialogsPageType, ProfilePageType } from "./redux/store";
 
 type AppPropsType = {
     profilePage: ProfilePageType;

@@ -5,7 +5,7 @@ import classes from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-import { DialogType, MessageType } from "../../redux/state";
+import { DialogType, MessageType } from "../../redux/store";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>;

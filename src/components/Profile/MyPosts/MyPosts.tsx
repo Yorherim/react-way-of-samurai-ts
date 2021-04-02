@@ -4,7 +4,7 @@ import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
 
-import { PostType } from "../../../redux/state";
+import { PostType } from "../../../redux/store";
 
 type MyPostsPropsType = {
     posts: Array<PostType>;
