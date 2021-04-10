@@ -44,6 +44,8 @@ function App({ profilePage, dialogsPage, dispatch }: AppPropsType) {
                         <Dialogs
                             dialogs={dialogsPage.dialogsData}
                             messages={dialogsPage.messagesData}
+                            newMessageText={dialogsPage.newMessageText}
+                            dispatch={dispatch}
                         />
                     )}
                 />

@@ -1,25 +1,39 @@
-import React, { createRef } from "react";
+import React, { ChangeEvent } from "react";
 
 import classes from "./Dialogs.module.scss";
 
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-import { DialogType, MessageType } from "../../redux/store";
+import {
+    ActionsTypes,
+    addMessageAC,
+    DialogType,
+    MessageType,
+    updateNewMessageTextAC,
+} from "../../redux/store";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>;
     messages: Array<MessageType>;
+    newMessageText: string;
+    dispatch: (action: ActionsTypes) => void;
 };
 
-function Dialogs({ dialogs, messages }: DialogsPropsType) {
-    const newMessage = createRef<HTMLTextAreaElement>();
-
+function Dialogs({
+    dialogs,
+    messages,
+    newMessageText,
+    dispatch,
+}: DialogsPropsType) {
     const addMessage = () => {
-        if (newMessage.current?.value) {
-            alert(newMessage.current.value);
-            newMessage.current.value = "";
+        if (newMessageText.trim()) {
+            dispatch(addMessageAC());
         }
+    };
+
+    const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        dispatch(updateNewMessageTextAC(e.currentTarget.value));
     };
 
     return (
@@ -36,7 +50,10 @@ function Dialogs({ dialogs, messages }: DialogsPropsType) {
                 ))}
 
                 <div className={classes.textarea}>
-                    <textarea ref={newMessage} />
+                    <textarea
+                        onChange={onMessageChange}
+                        value={newMessageText}
+                    />
                 </div>
                 <button onClick={addMessage}>Add</button>
             </div>

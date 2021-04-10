@@ -1,13 +1,17 @@
-let rerenderEntireTree = (state: StateType) => {};
+const ADD_POST = "ADD_POST";
+const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
+const ADD_MESSAGE = "ADD_MESSAGE";
+const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
 
-type AddPostActionType = {
-    type: "ADD_POST";
-};
-type UpdateNewPostChangeActionType = {
-    type: "UPDATE_NEW_POST_TEXT";
-    postText: string;
-};
-export type ActionsTypes = AddPostActionType | UpdateNewPostChangeActionType;
+type AddPostActionType = ReturnType<typeof addPostAC>;
+type AddMessageActionType = ReturnType<typeof addMessageAC>;
+type UpdateNewPostChangeActionType = ReturnType<typeof updateNewPostTextAC>;
+type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>;
+export type ActionsTypes =
+    | AddPostActionType
+    | UpdateNewPostChangeActionType
+    | AddMessageActionType
+    | UpdateNewMessageTextActionType;
 export type PostType = {
     id: number;
     message: string;
@@ -28,6 +32,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
     dialogsData: Array<DialogType>;
     messagesData: Array<MessageType>;
+    newMessageText: string;
 };
 export type StateType = {
     profilePage: ProfilePageType;
@@ -62,6 +67,7 @@ const store: StoreType = {
                 { id: 2, message: "Hello" },
                 { id: 3, message: "What's up?" },
             ],
+            newMessageText: "",
         },
     },
 
@@ -73,25 +79,53 @@ const store: StoreType = {
         console.log("state changed");
     },
 
+    subscribe(observer) {
+        this._callSubsriber = observer;
+    },
+
     dispatch(action) {
-        if (action.type === "ADD_POST") {
+        if (action.type === ADD_POST) {
             const newPost: PostType = {
-                id: 5,
+                id: 3,
                 message: this._state.profilePage.newPostText,
                 likesCount: 0,
             };
             this._state.profilePage.postsData.push(newPost);
             this._state.profilePage.newPostText = "";
             this._callSubsriber(this._state);
-        } else if (action.type === "UPDATE_NEW_POST_TEXT") {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.postText;
+            this._callSubsriber(this._state);
+        } else if (action.type === ADD_MESSAGE) {
+            const newMessage: MessageType = {
+                id: 4,
+                message: this._state.dialogsPage.newMessageText,
+            };
+            this._state.dialogsPage.messagesData.push(newMessage);
+            this._state.dialogsPage.newMessageText = "";
+            this._callSubsriber(this._state);
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
+            this._state.dialogsPage.newMessageText = action.messageText;
             this._callSubsriber(this._state);
         }
     },
+};
 
-    subscribe(observer) {
-        this._callSubsriber = observer;
-    },
+// action creators
+export const addPostAC = () => ({ type: ADD_POST });
+export const updateNewPostTextAC = (postText: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        postText,
+    } as const;
+};
+
+export const addMessageAC = () => ({ type: ADD_MESSAGE });
+export const updateNewMessageTextAC = (messageText: string) => {
+    return {
+        type: UPDATE_NEW_MESSAGE_TEXT,
+        messageText,
+    } as const;
 };
 
 export default store;

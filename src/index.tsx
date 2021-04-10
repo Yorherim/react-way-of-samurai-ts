@@ -12,8 +12,8 @@ export const rerenderEntireTree = (state: StateType) => {
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    profilePage={store._state.profilePage}
-                    dialogsPage={store._state.dialogsPage}
+                    profilePage={state.profilePage}
+                    dialogsPage={state.dialogsPage}
                     dispatch={store.dispatch.bind(store)}
                 />
             </BrowserRouter>
