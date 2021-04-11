@@ -93,7 +93,6 @@ const store: StoreType = {
             this._state.profilePage.newPostText = action.postText;
             this._callSubsriber(this._state);
         } else if (action.type === ADD_MESSAGE) {
-            console.log("test");
             const newMessage: MessageType = {
                 id: 4,
                 message: this._state.dialogsPage.newMessageText,
@@ -109,20 +108,18 @@ const store: StoreType = {
 };
 
 // action creators
-export const addPostAC = () => ({ type: ADD_POST });
-export const updateNewPostTextAC = (postText: string) => {
-    return {
+export const addPostAC = () => ({ type: ADD_POST } as const);
+export const updateNewPostTextAC = (postText: string) =>
+    ({
         type: UPDATE_NEW_POST_TEXT,
         postText,
-    } as const;
-};
+    } as const);
 
-export const addMessageAC = () => ({ type: ADD_MESSAGE });
-export const updateNewMessageTextAC = (messageText: string) => {
-    return {
+export const addMessageAC = () => ({ type: ADD_MESSAGE } as const);
+export const updateNewMessageTextAC = (messageText: string) =>
+    ({
         type: UPDATE_NEW_MESSAGE_TEXT,
         messageText,
-    } as const;
-};
+    } as const);
 
 export default store;
