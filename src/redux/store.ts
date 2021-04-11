@@ -3,15 +3,11 @@ const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
 const ADD_MESSAGE = "ADD_MESSAGE";
 const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
 
-type AddPostActionType = ReturnType<typeof addPostAC>;
-type AddMessageActionType = ReturnType<typeof addMessageAC>;
-type UpdateNewPostChangeActionType = ReturnType<typeof updateNewPostTextAC>;
-type UpdateNewMessageTextActionType = ReturnType<typeof updateNewMessageTextAC>;
 export type ActionsTypes =
-    | AddPostActionType
-    | UpdateNewPostChangeActionType
-    | AddMessageActionType
-    | UpdateNewMessageTextActionType;
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>
+    | ReturnType<typeof addMessageAC>
+    | ReturnType<typeof updateNewMessageTextAC>;
 export type PostType = {
     id: number;
     message: string;
@@ -97,6 +93,7 @@ const store: StoreType = {
             this._state.profilePage.newPostText = action.postText;
             this._callSubsriber(this._state);
         } else if (action.type === ADD_MESSAGE) {
+            console.log("test");
             const newMessage: MessageType = {
                 id: 4,
                 message: this._state.dialogsPage.newMessageText,
