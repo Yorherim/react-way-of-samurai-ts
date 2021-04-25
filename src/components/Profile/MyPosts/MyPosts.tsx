@@ -5,7 +5,10 @@ import classes from "./MyPosts.module.scss";
 import Post from "./Post/Post";
 
 import { ActionsTypes, PostType } from "../../../redux/store";
-import { addPostAC, updateNewPostTextAC } from "../../../redux/store";
+import {
+    addPostAC,
+    updateNewPostTextAC,
+} from "../../../redux/reducers/profile-reducer";
 
 type MyPostsPropsType = {
     posts: Array<PostType>;

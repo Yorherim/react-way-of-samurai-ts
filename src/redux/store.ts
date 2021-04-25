@@ -1,7 +1,13 @@
-const ADD_POST = "ADD_POST";
-const UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT";
-const ADD_MESSAGE = "ADD_MESSAGE";
-const UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT";
+import {
+    addMessageAC,
+    dialogsReducer,
+    updateNewMessageTextAC,
+} from "./reducers/dialogs-reducer";
+import {
+    addPostAC,
+    profileReducer,
+    updateNewPostTextAC,
+} from "./reducers/profile-reducer";
 
 export type ActionsTypes =
     | ReturnType<typeof addPostAC>
@@ -80,46 +86,11 @@ const store: StoreType = {
     },
 
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            const newPost: PostType = {
-                id: 3,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0,
-            };
-            this._state.profilePage.postsData.push(newPost);
-            this._state.profilePage.newPostText = "";
-            this._callSubsriber(this._state);
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.postText;
-            this._callSubsriber(this._state);
-        } else if (action.type === ADD_MESSAGE) {
-            const newMessage: MessageType = {
-                id: 4,
-                message: this._state.dialogsPage.newMessageText,
-            };
-            this._state.dialogsPage.messagesData.push(newMessage);
-            this._state.dialogsPage.newMessageText = "";
-            this._callSubsriber(this._state);
-        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
-            this._state.dialogsPage.newMessageText = action.messageText;
-            this._callSubsriber(this._state);
-        }
+        profileReducer(this._state.profilePage, action);
+        dialogsReducer(this._state.dialogsPage, action);
+
+        this._callSubsriber(this._state);
     },
 };
-
-// action creators
-export const addPostAC = () => ({ type: ADD_POST } as const);
-export const updateNewPostTextAC = (postText: string) =>
-    ({
-        type: UPDATE_NEW_POST_TEXT,
-        postText,
-    } as const);
-
-export const addMessageAC = () => ({ type: ADD_MESSAGE } as const);
-export const updateNewMessageTextAC = (messageText: string) =>
-    ({
-        type: UPDATE_NEW_MESSAGE_TEXT,
-        messageText,
-    } as const);
 
 export default store;

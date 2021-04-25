@@ -5,13 +5,11 @@ import classes from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
+import { ActionsTypes, DialogType, MessageType } from "../../redux/store";
 import {
-    ActionsTypes,
     addMessageAC,
-    DialogType,
-    MessageType,
     updateNewMessageTextAC,
-} from "../../redux/store";
+} from "../../redux/reducers/dialogs-reducer";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>;
