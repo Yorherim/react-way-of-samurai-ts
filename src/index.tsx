@@ -1,19 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
+import { CombinedState } from "redux";
 
 import "./index.scss";
 
 import App from "./App";
-import store, { StateType } from "./redux/store";
+import store from "./redux/redux-store";
+import { DialogsPageType, ProfilePageType } from "./redux/store";
 
-export const rerenderEntireTree = (state: StateType) => {
+export const rerenderEntireTree = (
+    state: CombinedState<{ profile: ProfilePageType; dialogs: DialogsPageType }>
+) => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    profilePage={state.profilePage}
-                    dialogsPage={state.dialogsPage}
+                    profilePage={state.profile}
+                    dialogsPage={state.dialogs}
                     dispatch={store.dispatch.bind(store)}
                 />
             </BrowserRouter>
@@ -24,4 +28,4 @@ export const rerenderEntireTree = (state: StateType) => {
 
 rerenderEntireTree(store.getState());
 
-store.subscribe(rerenderEntireTree);
+store.subscribe(() => rerenderEntireTree(store.getState()));

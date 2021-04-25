@@ -1,7 +1,19 @@
 import { ActionsTypes, ProfilePageType } from "../store";
 
+export type ProfileActionsType =
+    | ReturnType<typeof addPostAC>
+    | ReturnType<typeof updateNewPostTextAC>;
+
+const initialState: ProfilePageType = {
+    postsData: [
+        { id: 1, message: "Hello", likesCount: 9 },
+        { id: 2, message: "Hi", likesCount: 7 },
+    ],
+    newPostText: "",
+};
+
 export const profileReducer = (
-    state: ProfilePageType,
+    state = initialState,
     action: ActionsTypes
 ): ProfilePageType => {
     switch (action.type) {

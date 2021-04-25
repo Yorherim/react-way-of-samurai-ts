@@ -1,19 +1,8 @@
-import {
-    addMessageAC,
-    dialogsReducer,
-    updateNewMessageTextAC,
-} from "./reducers/dialogs-reducer";
-import {
-    addPostAC,
-    profileReducer,
-    updateNewPostTextAC,
-} from "./reducers/profile-reducer";
+import { DialogsActionType, dialogsReducer } from "./reducers/dialogs-reducer";
+import { ProfileActionsType, profileReducer } from "./reducers/profile-reducer";
 
-export type ActionsTypes =
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
-    | ReturnType<typeof addMessageAC>
-    | ReturnType<typeof updateNewMessageTextAC>;
+export type ActionsTypes = ProfileActionsType | DialogsActionType;
+
 export type PostType = {
     id: number;
     message: string;
