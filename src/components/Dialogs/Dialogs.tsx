@@ -4,21 +4,10 @@ import classes from "./Dialogs.module.scss";
 
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-
-import { DialogType, MessageType } from "../../redux/store";
-
-type DialogsPropsType = {
-    dialogs: Array<DialogType>;
-    messages: Array<MessageType>;
-    newMessageText: string;
-    addMessage: () => void;
-    updateNewMessageText: (messageText: string) => void;
-};
+import { DialogsPropsType } from "./DialogsContainer";
 
 function Dialogs({
-    dialogs,
-    messages,
-    newMessageText,
+    dialogs: { dialogsData, messagesData, newMessageText },
     addMessage,
     updateNewMessageText,
 }: DialogsPropsType) {
@@ -31,13 +20,13 @@ function Dialogs({
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogs_items}>
-                {dialogs.map((d) => (
+                {dialogsData.map((d) => (
                     <DialogItem key={d.id} name={d.name} id={d.id} />
                 ))}
             </div>
 
             <div className={classes.messages}>
-                {messages.map((m) => (
+                {messagesData.map((m) => (
                     <Message key={m.id} message={m.message} />
                 ))}
 

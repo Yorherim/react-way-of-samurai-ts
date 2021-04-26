@@ -10,11 +10,13 @@ declare global {
 }
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     profile,
     dialogs,
 });
 
-const store = createStore(reducers, composeEnhancers());
+export type AppStateType = ReturnType<typeof rootReducer>;
+
+const store = createStore(rootReducer, composeEnhancers());
 
 export default store;

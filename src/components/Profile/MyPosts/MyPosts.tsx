@@ -3,23 +3,18 @@ import React, { ChangeEvent } from "react";
 import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
-
-import { PostType } from "../../../redux/store";
-
-type MyPostsPropsType = {
-    posts: Array<PostType>;
-    newPostText: string;
-    addPost: () => void;
-    updateNewPostText: (postText: string) => void;
-};
+import { MyPostsPropsType } from "./MyPostsContainer";
 
 function MyPosts({
-    posts,
-    newPostText,
+    profile: { postsData, newPostText },
     addPost,
     updateNewPostText,
 }: MyPostsPropsType) {
-    const addNewPost = () => addPost();
+    const addNewPost = () => {
+        if (newPostText.trim()) {
+            addPost();
+        }
+    };
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         updateNewPostText(e.currentTarget.value);
@@ -36,7 +31,7 @@ function MyPosts({
             </div>
 
             <div className={classes.posts}>
-                {posts.map((p) => (
+                {postsData.map((p) => (
                     <Post
                         key={p.id}
                         message={p.message}
