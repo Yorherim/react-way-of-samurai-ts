@@ -4,27 +4,25 @@ import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
 
-import { ActionsTypes, PostType } from "../../../redux/store";
-import {
-    addPostAC,
-    updateNewPostTextAC,
-} from "../../../redux/reducers/profile-reducer";
+import { PostType } from "../../../redux/store";
 
 type MyPostsPropsType = {
     posts: Array<PostType>;
-    dispatch: (action: ActionsTypes) => void;
     newPostText: string;
+    addPost: () => void;
+    updateNewPostText: (postText: string) => void;
 };
 
-function MyPosts({ posts, dispatch, newPostText }: MyPostsPropsType) {
-    const addNewPost = () => {
-        if (newPostText.trim()) {
-            dispatch(addPostAC());
-        }
-    };
+function MyPosts({
+    posts,
+    newPostText,
+    addPost,
+    updateNewPostText,
+}: MyPostsPropsType) {
+    const addNewPost = () => addPost();
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(updateNewPostTextAC(e.currentTarget.value));
+        updateNewPostText(e.currentTarget.value);
     };
 
     return (

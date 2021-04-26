@@ -7,10 +7,10 @@ import {
     Header,
     Navbar,
     Profile,
-    Dialogs,
     News,
     Music,
     Settings,
+    DialogsContainer,
 } from "./components";
 
 //types
@@ -41,7 +41,7 @@ function App({ profilePage, dialogsPage, dispatch }: AppPropsType) {
                 <Route
                     path="/dialogs"
                     render={() => (
-                        <Dialogs
+                        <DialogsContainer
                             dialogs={dialogsPage.dialogsData}
                             messages={dialogsPage.messagesData}
                             newMessageText={dialogsPage.newMessageText}

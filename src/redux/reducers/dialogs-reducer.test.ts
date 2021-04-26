@@ -3,7 +3,7 @@ import {
     dialogsReducer,
     updateNewMessageTextAC,
 } from "./dialogs-reducer";
-import { DialogsPageType } from "../store";
+import { DialogsPageType, MessageType } from "../store";
 
 let state: DialogsPageType;
 
@@ -25,7 +25,7 @@ beforeEach(() => {
 });
 
 test("new message should be added", () => {
-    const newMessage = { id: 6, message: "ratata" };
+    const newMessage: MessageType = { id: 6, message: "ratata" };
     state.newMessageText = newMessage.message;
 
     const endState = dialogsReducer(state, addMessageAC());

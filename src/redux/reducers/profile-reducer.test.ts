@@ -3,7 +3,7 @@ import {
     profileReducer,
     updateNewPostTextAC,
 } from "./profile-reducer";
-import { ProfilePageType } from "../store";
+import { PostType, ProfilePageType } from "../store";
 
 let state: ProfilePageType;
 
@@ -18,7 +18,7 @@ beforeEach(() => {
 });
 
 test("new post should be added", () => {
-    const newPost = { id: 5, message: "hello", likesCount: 0 };
+    const newPost: PostType = { id: 5, message: "hello", likesCount: 0 };
     state.newPostText = newPost.message;
 
     const endState = profileReducer(state, addPostAC());

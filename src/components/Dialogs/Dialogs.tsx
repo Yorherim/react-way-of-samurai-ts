@@ -5,33 +5,27 @@ import classes from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
-import { ActionsTypes, DialogType, MessageType } from "../../redux/store";
-import {
-    addMessageAC,
-    updateNewMessageTextAC,
-} from "../../redux/reducers/dialogs-reducer";
+import { DialogType, MessageType } from "../../redux/store";
 
 type DialogsPropsType = {
     dialogs: Array<DialogType>;
     messages: Array<MessageType>;
     newMessageText: string;
-    dispatch: (action: ActionsTypes) => void;
+    addMessage: () => void;
+    updateNewMessageText: (messageText: string) => void;
 };
 
 function Dialogs({
     dialogs,
     messages,
     newMessageText,
-    dispatch,
+    addMessage,
+    updateNewMessageText,
 }: DialogsPropsType) {
-    const addMessage = () => {
-        if (newMessageText.trim()) {
-            dispatch(addMessageAC());
-        }
-    };
+    const sendMessage = () => addMessage();
 
     const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        dispatch(updateNewMessageTextAC(e.currentTarget.value));
+        updateNewMessageText(e.currentTarget.value);
     };
 
     return (
@@ -53,7 +47,7 @@ function Dialogs({
                         value={newMessageText}
                     />
                 </div>
-                <button onClick={addMessage}>Add</button>
+                <button onClick={sendMessage}>Add</button>
             </div>
         </div>
     );
