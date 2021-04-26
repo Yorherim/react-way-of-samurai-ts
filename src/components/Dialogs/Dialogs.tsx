@@ -7,7 +7,9 @@ import Message from "./Message/Message";
 import { DialogsPropsType } from "./DialogsContainer";
 
 function Dialogs({
-    dialogs: { dialogsData, messagesData, newMessageText },
+    dialogsData,
+    messagesData,
+    newMessageText,
     addMessage,
     updateNewMessageText,
 }: DialogsPropsType) {
@@ -20,14 +22,14 @@ function Dialogs({
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogs_items}>
-                {dialogsData.map((d) => (
-                    <DialogItem key={d.id} name={d.name} id={d.id} />
+                {dialogsData.map((d, i) => (
+                    <DialogItem key={`${d}_${i}`} name={d.name} id={d.id} />
                 ))}
             </div>
 
             <div className={classes.messages}>
-                {messagesData.map((m) => (
-                    <Message key={m.id} message={m.message} />
+                {messagesData.map((m, i) => (
+                    <Message key={`${m}_${i}`} message={m.message} />
                 ))}
 
                 <div className={classes.textarea}>

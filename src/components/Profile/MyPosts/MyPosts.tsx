@@ -6,7 +6,8 @@ import Post from "./Post/Post";
 import { MyPostsPropsType } from "./MyPostsContainer";
 
 function MyPosts({
-    profile: { postsData, newPostText },
+    postsData,
+    newPostText,
     addPost,
     updateNewPostText,
 }: MyPostsPropsType) {
@@ -31,9 +32,9 @@ function MyPosts({
             </div>
 
             <div className={classes.posts}>
-                {postsData.map((p) => (
+                {postsData.map((p, i) => (
                     <Post
-                        key={p.id}
+                        key={`${p}_${i}`}
                         message={p.message}
                         likesCount={p.likesCount}
                     />

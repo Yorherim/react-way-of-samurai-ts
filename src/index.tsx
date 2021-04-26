@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import { CombinedState } from "redux";
 import { Provider } from "react-redux";
 
 import "./index.scss";
 
 import App from "./App";
-import store, { AppStateType } from "./redux/redux-store";
+import store from "./redux/redux-store";
 
-export const rerenderEntireTree = (state: CombinedState<AppStateType>) => {
+export const rerenderEntireTree = () => {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
@@ -21,6 +20,4 @@ export const rerenderEntireTree = (state: CombinedState<AppStateType>) => {
         document.getElementById("root")
     );
 };
-rerenderEntireTree(store.getState());
-
-store.subscribe(() => rerenderEntireTree(store.getState()));
+rerenderEntireTree();

@@ -3,14 +3,17 @@ import { Dispatch } from "redux";
 
 import {
     addMessageAC,
-    DialogsPageType,
+    DialogType,
+    MessageType,
     updateNewMessageTextAC,
 } from "../../redux/reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import { AppStateType } from "../../redux/redux-store";
 
 type MapStateToPropsType = {
-    dialogs: DialogsPageType;
+    dialogsData: DialogType[];
+    messagesData: MessageType[];
+    newMessageText: string;
 };
 type MapDispatchToPropsType = {
     addMessage: () => void;
@@ -19,7 +22,9 @@ type MapDispatchToPropsType = {
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-    dialogs: state.dialogs,
+    dialogsData: state.dialogs.dialogsData,
+    messagesData: state.dialogs.messagesData,
+    newMessageText: state.dialogs.newMessageText,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => ({

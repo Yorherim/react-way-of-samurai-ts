@@ -1,12 +1,12 @@
-type MessageType = {
+export type MessageType = {
     id: number;
     message: string;
 };
-type DialogType = {
+export type DialogType = {
     id: number;
     name: string;
 };
-export type DialogsPageType = typeof initialState;
+type DialogsPageType = typeof initialState;
 
 export type DialogsActionType =
     | ReturnType<typeof addMessageAC>
@@ -33,16 +33,16 @@ export const dialogsReducer = (
 ): DialogsPageType => {
     switch (action.type) {
         case "ADD_MESSAGE":
-            const newMessage = {
-                id: 6,
-                message: state.newMessageText,
+            return {
+                ...state,
+                messagesData: [
+                    ...state.messagesData,
+                    { id: 6, message: state.newMessageText },
+                ],
+                newMessageText: "",
             };
-            state.messagesData.push(newMessage);
-            state.newMessageText = "";
-            return state;
         case "UPDATE_NEW_MESSAGE_TEXT":
-            state.newMessageText = action.messageText;
-            return state;
+            return { ...state, newMessageText: action.messageText };
         default:
             return state;
     }
