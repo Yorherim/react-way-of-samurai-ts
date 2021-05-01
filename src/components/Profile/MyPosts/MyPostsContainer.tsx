@@ -3,37 +3,37 @@ import { Dispatch } from "redux";
 
 import {
     addPostAC,
-    PostType,
     updateNewPostTextAC,
 } from "../../../redux/reducers/profile-reducer";
 import MyPosts from "./MyPosts";
 import { AppStateType } from "../../../redux/redux-store";
 
-type MapStateToPropsType = {
-    postsData: PostType[];
-    newPostText: string;
-};
-type MapDispatchToPropsType = {
-    addPost: () => void;
-    updateNewPostText: (postText: string) => void;
-};
+type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
+type MapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
+const mapStateToProps = (state: AppStateType) => ({
     postsData: state.profile.postsData,
     newPostText: state.profile.newPostText,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
     addPost: () => {
         dispatch(addPostAC());
-        console.log("test");
     },
     updateNewPostText: (postText: string) => {
         dispatch(updateNewPostTextAC(postText));
     },
 });
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+const MyPostsContainer = connect<
+    MapStateToPropsType,
+    MapDispatchToPropsType,
+    {},
+    AppStateType
+>(
+    mapStateToProps,
+    mapDispatchToProps
+)(MyPosts);
 
 export default MyPostsContainer;
