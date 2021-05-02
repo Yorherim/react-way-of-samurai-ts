@@ -10,13 +10,12 @@ import store from "./redux/redux-store";
 
 export const rerenderEntireTree = () => {
     ReactDOM.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </BrowserRouter>
-        </React.StrictMode>,
+        <BrowserRouter>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </BrowserRouter>,
+
         document.getElementById("root")
     );
 };

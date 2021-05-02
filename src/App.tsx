@@ -11,7 +11,7 @@ import {
     Music,
     Settings,
     DialogsContainer,
-    Users,
+    UsersContainer,
 } from "./components";
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
             <div className="app-wrapper--content">
                 <Route path="/profile" render={() => <Profile />} />
                 <Route path="/dialogs" render={() => <DialogsContainer />} />
-                <Route path="/users" render={() => <Users />} />
+                <Route path="/users" render={() => <UsersContainer />} />
                 <Route path="/news" component={News} />
                 <Route path="/music" component={Music} />
                 <Route path="/settings" component={Settings} />

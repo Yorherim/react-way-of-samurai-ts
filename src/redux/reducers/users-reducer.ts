@@ -1,5 +1,6 @@
-type UserType = {
+export type UsersType = {
     id: number;
+    photoUrl: string;
     followed: boolean;
     fullName: string;
     status: string;
@@ -9,25 +10,13 @@ type UserType = {
     };
 };
 export type UsersPageType = typeof initialState;
-type ActionsType = ReturnType<typeof followAC> | ReturnType<typeof unfollowtAC>;
+type ActionsType =
+    | ReturnType<typeof followAC>
+    | ReturnType<typeof unfollowtAC>
+    | ReturnType<typeof setUsersAC>;
 
 const initialState = {
-    users: [
-        {
-            id: 1,
-            followed: true,
-            fullName: "Hello",
-            status: "I am a boss",
-            location: { city: "Minsk", country: "Belarus" },
-        },
-        {
-            id: 1,
-            followed: false,
-            fullName: "Hello",
-            status: "I am a boss",
-            location: { city: "Minsk", country: "Belarus" },
-        },
-    ] as UserType[],
+    users: [] as UsersType[],
 };
 
 export const usersReducer = (
@@ -35,6 +24,31 @@ export const usersReducer = (
     action: ActionsType
 ): UsersPageType => {
     switch (action.type) {
+        case "FOLLOW":
+            return {
+                ...state,
+                users: state.users.map((user) => {
+                    if (user.id === action.userId) {
+                        return { ...user, followed: true };
+                    }
+                    return user;
+                }),
+            };
+        case "UNFOLLOW":
+            return {
+                ...state,
+                users: state.users.map((user) => {
+                    if (user.id === action.userId) {
+                        return { ...user, followed: false };
+                    }
+                    return user;
+                }),
+            };
+        case "SET_USERS":
+            return {
+                ...state,
+                users: [...state.users, ...action.users],
+            };
         default:
             return state;
     }
@@ -48,4 +62,8 @@ export const followAC = (userId: number) => ({
 export const unfollowtAC = (userId: number) => ({
     type: "UNFOLLOW" as const,
     userId,
+});
+export const setUsersAC = (users: UsersType[]) => ({
+    type: "SET_USERS" as const,
+    users,
 });

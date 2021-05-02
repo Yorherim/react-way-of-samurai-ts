@@ -13,9 +13,9 @@ type MapDispatchToPropsType = ReturnType<typeof mapDispatchToProps>;
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType) => ({
-    dialogsData: state.dialogs.dialogsData,
-    messagesData: state.dialogs.messagesData,
-    newMessageText: state.dialogs.newMessageText,
+    dialogsData: state.dialogsPage.dialogsData,
+    messagesData: state.dialogsPage.messagesData,
+    newMessageText: state.dialogsPage.newMessageText,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
