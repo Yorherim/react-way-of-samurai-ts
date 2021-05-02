@@ -3,7 +3,7 @@ export type PostType = {
     message: string;
     likesCount: number;
 };
-type ProfilePageType = typeof initialState;
+export type ProfilePageType = typeof initialState;
 
 export type ProfileActionsType =
     | ReturnType<typeof addPostAC>

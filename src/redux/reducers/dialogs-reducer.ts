@@ -6,7 +6,7 @@ export type DialogType = {
     id: number;
     name: string;
 };
-type DialogsPageType = typeof initialState;
+export type DialogsPageType = typeof initialState;
 
 export type DialogsActionType =
     | ReturnType<typeof addMessageAC>
