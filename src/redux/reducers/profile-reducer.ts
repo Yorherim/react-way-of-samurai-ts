@@ -5,7 +5,7 @@ export type PostType = {
 };
 export type ProfilePageType = typeof initialState;
 
-export type ProfileActionsType =
+type ProfileActionsType =
     | ReturnType<typeof addPostAC>
     | ReturnType<typeof updateNewPostTextAC>;
 

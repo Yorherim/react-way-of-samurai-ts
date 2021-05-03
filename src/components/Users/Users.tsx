@@ -1,33 +1,19 @@
 import React from "react";
+import axios from "axios";
 
 import classes from "./Users.module.scss";
+import userPhoto from "../../assets/images/user.png";
 
 import { UsersPropsType } from "./UsersContainer";
-import { UsersType } from "../../redux/reducers/users-reducer";
 
 function Users({ users, follow, unfollow, setUsers }: UsersPropsType) {
-    debugger;
     if (users.length === 0) {
-        setUsers([
-            {
-                id: 1,
-                photoUrl:
-                    "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
-                followed: true,
-                fullName: "Dima",
-                status: "What's up?",
-                location: { city: "Minsk", country: "Belarus" },
-            },
-            {
-                id: 2,
-                photoUrl:
-                    "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
-                followed: false,
-                fullName: "Igor",
-                status: "ratata",
-                location: { city: "Chicago", country: "USA" },
-            },
-        ]);
+        axios
+            .get("https://social-network.samuraijs.com/api/1.0/users")
+            .then((res) => {
+                console.log(res);
+                setUsers(res.data.items);
+            });
     }
 
     const setUsersOnPage = () => setUsers(users);
@@ -43,7 +29,14 @@ function Users({ users, follow, unfollow, setUsers }: UsersPropsType) {
                     <div key={`${user}_${i}`} className={classes.user}>
                         <span>
                             <div>
-                                <img src={user.photoUrl} alt="avatar" />
+                                <img
+                                    src={
+                                        user.photos.small
+                                            ? user.photos.small
+                                            : userPhoto
+                                    }
+                                    alt="avatar"
+                                />
                             </div>
                             <div>
                                 {user.followed ? (
@@ -58,12 +51,8 @@ function Users({ users, follow, unfollow, setUsers }: UsersPropsType) {
 
                         <span>
                             <span>
-                                <div>{user.fullName}</div>
+                                <div>{user.name}</div>
                                 <div>{user.status}</div>
-                            </span>
-                            <span>
-                                <div>{user.location.country}</div>
-                                <div>{user.location.city}</div>
                             </span>
                         </span>
                     </div>

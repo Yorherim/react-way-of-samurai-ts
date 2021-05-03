@@ -8,7 +8,7 @@ export type DialogType = {
 };
 export type DialogsPageType = typeof initialState;
 
-export type DialogsActionType =
+type DialogsActionType =
     | ReturnType<typeof addMessageAC>
     | ReturnType<typeof updateNewMessageTextAC>;
 

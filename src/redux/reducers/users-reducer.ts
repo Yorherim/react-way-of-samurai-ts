@@ -1,13 +1,13 @@
 export type UsersType = {
-    id: number;
-    photoUrl: string;
     followed: boolean;
-    fullName: string;
-    status: string;
-    location: {
-        city: string;
-        country: string;
+    id: number;
+    name: string;
+    photos: {
+        large: string | null;
+        small: string | null;
     };
+    status: string | null;
+    uniqueUrlName: string | null;
 };
 export type UsersPageType = typeof initialState;
 type ActionsType =
