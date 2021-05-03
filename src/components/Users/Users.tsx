@@ -7,20 +7,18 @@ import userPhoto from "../../assets/images/user.png";
 import { UsersPropsType } from "./UsersContainer";
 
 function Users({ users, follow, unfollow, setUsers }: UsersPropsType) {
-    if (users.length === 0) {
-        axios
-            .get("https://social-network.samuraijs.com/api/1.0/users")
-            .then((res) => {
-                console.log(res);
-                setUsers(res.data.items);
-            });
-    }
-
-    const setUsersOnPage = () => setUsers(users);
+    const getUsers = () => {
+        if (users.length === 0) {
+            axios
+                .get("https://social-network.samuraijs.com/api/1.0/users")
+                .then((res) => setUsers(res.data.items))
+                .catch((err) => console.error(err));
+        }
+    };
 
     return (
         <>
-            {<button onClick={setUsersOnPage}>set users</button>}
+            <button onClick={getUsers}>set users</button>
             {users.map((user, i) => {
                 const followUser = () => follow(user.id);
                 const unfollowUser = () => unfollow(user.id);
