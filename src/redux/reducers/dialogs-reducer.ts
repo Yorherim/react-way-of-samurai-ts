@@ -1,3 +1,7 @@
+enum DIALOGS_ACTIONS_TYPE {
+    ADD_MESSAGE = "ADD_MESSAGE",
+    UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
+}
 export type MessageType = {
     id: number;
     message: string;
@@ -32,7 +36,7 @@ export const dialogsReducer = (
     action: DialogsActionType
 ): DialogsPageType => {
     switch (action.type) {
-        case "ADD_MESSAGE":
+        case DIALOGS_ACTIONS_TYPE.ADD_MESSAGE:
             return {
                 ...state,
                 messagesData: [
@@ -41,7 +45,7 @@ export const dialogsReducer = (
                 ],
                 newMessageText: "",
             };
-        case "UPDATE_NEW_MESSAGE_TEXT":
+        case DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT:
             return { ...state, newMessageText: action.messageText };
         default:
             return state;
@@ -50,9 +54,9 @@ export const dialogsReducer = (
 
 // actions creators
 export const addMessageAC = () => ({
-    type: "ADD_MESSAGE" as const,
+    type: DIALOGS_ACTIONS_TYPE.ADD_MESSAGE as const,
 });
 export const updateNewMessageTextAC = (messageText: string) => ({
-    type: "UPDATE_NEW_MESSAGE_TEXT" as const,
+    type: DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT as const,
     messageText,
 });

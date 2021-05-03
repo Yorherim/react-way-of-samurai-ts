@@ -1,3 +1,7 @@
+enum PROFILE_ACTIONS_TYPE {
+    ADD_POST = "ADD_POST",
+    UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
+}
 export type PostType = {
     id: number;
     message: string;
@@ -22,7 +26,7 @@ export const profileReducer = (
     action: ProfileActionsType
 ): ProfilePageType => {
     switch (action.type) {
-        case "ADD_POST":
+        case PROFILE_ACTIONS_TYPE.ADD_POST:
             return {
                 ...state,
                 postsData: [
@@ -31,7 +35,7 @@ export const profileReducer = (
                 ],
                 newPostText: "",
             };
-        case "UPDATE_NEW_POST_TEXT":
+        case PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT:
             return { ...state, newPostText: action.postText };
         default:
             return state;
@@ -40,9 +44,9 @@ export const profileReducer = (
 
 // action creators
 export const addPostAC = () => ({
-    type: "ADD_POST" as const,
+    type: PROFILE_ACTIONS_TYPE.ADD_POST as const,
 });
 export const updateNewPostTextAC = (postText: string) => ({
-    type: "UPDATE_NEW_POST_TEXT" as const,
+    type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT as const,
     postText,
 });

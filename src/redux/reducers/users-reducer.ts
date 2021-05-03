@@ -1,3 +1,9 @@
+enum USERS_ACTIONS_TYPE {
+    FOLLOW = "FOLLOW",
+    UNFOLLOW = "UNFOLLOW",
+    SET_USERS = "SET_USERS",
+}
+
 export type UsersType = {
     followed: boolean;
     id: number;
@@ -24,7 +30,7 @@ export const usersReducer = (
     action: ActionsType
 ): UsersPageType => {
     switch (action.type) {
-        case "FOLLOW":
+        case USERS_ACTIONS_TYPE.FOLLOW:
             return {
                 ...state,
                 users: state.users.map((user) => {
@@ -34,7 +40,7 @@ export const usersReducer = (
                     return user;
                 }),
             };
-        case "UNFOLLOW":
+        case USERS_ACTIONS_TYPE.UNFOLLOW:
             return {
                 ...state,
                 users: state.users.map((user) => {
@@ -44,7 +50,7 @@ export const usersReducer = (
                     return user;
                 }),
             };
-        case "SET_USERS":
+        case USERS_ACTIONS_TYPE.SET_USERS:
             return {
                 ...state,
                 users: [...state.users, ...action.users],
@@ -56,14 +62,14 @@ export const usersReducer = (
 
 // action creators
 export const followAC = (userId: number) => ({
-    type: "FOLLOW" as const,
+    type: USERS_ACTIONS_TYPE.FOLLOW as const,
     userId,
 });
 export const unfollowtAC = (userId: number) => ({
-    type: "UNFOLLOW" as const,
+    type: USERS_ACTIONS_TYPE.UNFOLLOW as const,
     userId,
 });
 export const setUsersAC = (users: UsersType[]) => ({
-    type: "SET_USERS" as const,
+    type: USERS_ACTIONS_TYPE.SET_USERS as const,
     users,
 });
