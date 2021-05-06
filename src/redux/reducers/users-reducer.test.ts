@@ -13,22 +13,28 @@ beforeEach(() => {
     state = {
         users: [
             {
-                id: 1,
-                photoUrl:
-                    "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
                 followed: false,
-                fullName: "Igor",
+                id: 1,
+                name: "Igor",
+                photos: {
+                    large:
+                        "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
+                    small: null,
+                },
                 status: "I am a boss",
-                location: { city: "Minsk", country: "Belarus" },
+                uniqueUrlName: null,
             },
             {
-                id: 2,
-                photoUrl:
-                    "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
                 followed: true,
-                fullName: "Dima",
-                status: "I am good",
-                location: { city: "Moscow", country: "Russia" },
+                id: 2,
+                name: "Igor",
+                photos: {
+                    large:
+                        "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
+                    small: null,
+                },
+                status: "I am a boss",
+                uniqueUrlName: null,
             },
         ],
     };
@@ -68,22 +74,28 @@ test("user should be correct change follow/unfollow", () => {
 test("users should be added in state", () => {
     const newUsers: UsersType[] = [
         {
-            id: 3,
-            photoUrl:
-                "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
             followed: false,
-            fullName: "Sanya",
+            id: 3,
+            name: "Igor",
+            photos: {
+                large:
+                    "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
+                small: null,
+            },
             status: "I am a boss",
-            location: { city: "Minsk", country: "Belarus" },
+            uniqueUrlName: null,
         },
         {
-            id: 4,
-            photoUrl:
-                "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
             followed: true,
-            fullName: "Boba",
-            status: "I am good",
-            location: { city: "Moscow", country: "Russia" },
+            id: 4,
+            name: "Igor",
+            photos: {
+                large:
+                    "https://www.pinclipart.com/picdir/middle/379-3797946_software-developer-computer-servers-web-others-web-developer.png",
+                small: null,
+            },
+            status: "I am a boss",
+            uniqueUrlName: null,
         },
     ];
 

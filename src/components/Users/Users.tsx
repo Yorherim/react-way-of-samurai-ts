@@ -9,12 +9,10 @@ import { UsersPropsType } from "./UsersContainer";
 class Users extends React.Component<UsersPropsType> {
     constructor(props: UsersPropsType) {
         super(props);
-        if (this.props.users.length === 0) {
-            axios
-                .get("https://social-network.samuraijs.com/api/1.0/users")
-                .then((res) => this.props.setUsers(res.data.items))
-                .catch((err) => console.error(err));
-        }
+        axios
+            .get("https://social-network.samuraijs.com/api/1.0/users")
+            .then((res) => this.props.setUsers(res.data.items))
+            .catch((err) => console.error(err));
     }
 
     render() {
