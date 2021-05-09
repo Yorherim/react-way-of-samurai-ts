@@ -18,12 +18,8 @@ export type UsersType = {
     uniqueUrlName: string | null;
 };
 export type UsersPageType = typeof initialState;
-type ActionsType =
-    | ReturnType<typeof followAC>
-    | ReturnType<typeof unfollowtAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof changeCurrentPageAC>
-    | ReturnType<typeof setTotalUsersCountAC>;
+type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
+type ActionsTypes = ReturnType<InferValueTypes<typeof usersActions>>;
 
 const initialState = {
     users: [] as UsersType[],
@@ -34,7 +30,7 @@ const initialState = {
 
 export const usersReducer = (
     state: UsersPageType = initialState,
-    action: ActionsType
+    action: ActionsTypes
 ): UsersPageType => {
     switch (action.type) {
         case USERS_ACTIONS_TYPE.FOLLOW:
@@ -77,24 +73,27 @@ export const usersReducer = (
     }
 };
 
-// action creators
-export const followAC = (userId: number) => ({
-    type: USERS_ACTIONS_TYPE.FOLLOW as const,
-    userId,
-});
-export const unfollowtAC = (userId: number) => ({
-    type: USERS_ACTIONS_TYPE.UNFOLLOW as const,
-    userId,
-});
-export const setUsersAC = (users: UsersType[]) => ({
-    type: USERS_ACTIONS_TYPE.SET_USERS as const,
-    users,
-});
-export const changeCurrentPageAC = (page: number) => ({
-    type: USERS_ACTIONS_TYPE.CHANGE_CURRENT_PAGE as const,
-    page,
-});
-export const setTotalUsersCountAC = (totalCount: number) => ({
-    type: USERS_ACTIONS_TYPE.SET_TOTAL_USERS_COUNT as const,
-    totalCount,
-});
+// ----- action creators -----
+export const usersActions = {
+    followAC: (userId: number) => ({
+        type: USERS_ACTIONS_TYPE.FOLLOW as const,
+        userId,
+    }),
+    unfollowAC: (userId: number) => ({
+        type: USERS_ACTIONS_TYPE.UNFOLLOW as const,
+        userId,
+    }),
+    setUsersAC: (users: UsersType[]) => ({
+        type: USERS_ACTIONS_TYPE.SET_USERS as const,
+        users,
+    }),
+    changeCurrentPageAC: (page: number) => ({
+        type: USERS_ACTIONS_TYPE.CHANGE_CURRENT_PAGE as const,
+        page,
+    }),
+    setTotalUsersCountAC: (totalCount: number) => ({
+        type: USERS_ACTIONS_TYPE.SET_TOTAL_USERS_COUNT as const,
+        totalCount,
+    }),
+};
+// --------------------

@@ -11,10 +11,8 @@ export type DialogType = {
     name: string;
 };
 export type DialogsPageType = typeof initialState;
-
-type DialogsActionType =
-    | ReturnType<typeof addMessageAC>
-    | ReturnType<typeof updateNewMessageTextAC>;
+type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
+type ActionsTypes = ReturnType<InferValueTypes<typeof dialogsActions>>;
 
 const initialState = {
     dialogsData: [
@@ -33,7 +31,7 @@ const initialState = {
 
 export const dialogsReducer = (
     state: DialogsPageType = initialState,
-    action: DialogsActionType
+    action: ActionsTypes
 ): DialogsPageType => {
     switch (action.type) {
         case DIALOGS_ACTIONS_TYPE.ADD_MESSAGE:
@@ -53,10 +51,12 @@ export const dialogsReducer = (
 };
 
 // actions creators
-export const addMessageAC = () => ({
-    type: DIALOGS_ACTIONS_TYPE.ADD_MESSAGE as const,
-});
-export const updateNewMessageTextAC = (messageText: string) => ({
-    type: DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT as const,
-    messageText,
-});
+export const dialogsActions = {
+    addMessageAC: () => ({
+        type: DIALOGS_ACTIONS_TYPE.ADD_MESSAGE as const,
+    }),
+    updateNewMessageTextAC: (messageText: string) => ({
+        type: DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT as const,
+        messageText,
+    }),
+};

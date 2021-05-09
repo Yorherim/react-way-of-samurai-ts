@@ -1,10 +1,11 @@
 import {
-    addMessageAC,
+    dialogsActions,
     DialogsPageType,
     dialogsReducer,
     MessageType,
-    updateNewMessageTextAC,
 } from "./dialogs-reducer";
+
+const { addMessageAC, updateNewMessageTextAC } = dialogsActions;
 
 let state: DialogsPageType;
 

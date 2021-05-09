@@ -8,10 +8,8 @@ export type PostType = {
     likesCount: number;
 };
 export type ProfilePageType = typeof initialState;
-
-type ProfileActionsType =
-    | ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>;
+type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
+type ActionsType = ReturnType<InferValueTypes<typeof profileActions>>;
 
 const initialState = {
     postsData: [
@@ -23,7 +21,7 @@ const initialState = {
 
 export const profileReducer = (
     state: ProfilePageType = initialState,
-    action: ProfileActionsType
+    action: ActionsType
 ): ProfilePageType => {
     switch (action.type) {
         case PROFILE_ACTIONS_TYPE.ADD_POST:
@@ -43,10 +41,12 @@ export const profileReducer = (
 };
 
 // action creators
-export const addPostAC = () => ({
-    type: PROFILE_ACTIONS_TYPE.ADD_POST as const,
-});
-export const updateNewPostTextAC = (postText: string) => ({
-    type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT as const,
-    postText,
-});
+export const profileActions = {
+    addPostAC: () => ({
+        type: PROFILE_ACTIONS_TYPE.ADD_POST as const,
+    }),
+    updateNewPostTextAC: (postText: string) => ({
+        type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT as const,
+        postText,
+    }),
+};

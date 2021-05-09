@@ -1,13 +1,17 @@
 import {
-    changeCurrentPageAC,
-    followAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowtAC,
+    usersActions,
     UsersPageType,
     usersReducer,
     UsersType,
 } from "./users-reducer";
+
+const {
+    changeCurrentPageAC,
+    followAC,
+    setTotalUsersCountAC,
+    setUsersAC,
+    unfollowAC,
+} = usersActions;
 
 let state: UsersPageType;
 
@@ -56,7 +60,7 @@ test("user should be followed", () => {
 
 test("user should be unfollowed", () => {
     const userId = state.users[1].id;
-    const endState = usersReducer(state, unfollowtAC(userId));
+    const endState = usersReducer(state, unfollowAC(userId));
 
     expect(endState.users[1].followed).toBeFalsy();
     expect(endState.users[0].followed).toBeFalsy();
@@ -70,7 +74,7 @@ test("user should be correct change follow/unfollow", () => {
     expect(endState.users[0].followed).toBeTruthy();
     expect(endState.users[1].followed).toBeTruthy();
 
-    const endState2 = usersReducer(endState, unfollowtAC(userId));
+    const endState2 = usersReducer(endState, unfollowAC(userId));
 
     expect(endState2.users[0].followed).toBeFalsy();
     expect(endState2.users[1].followed).toBeTruthy();

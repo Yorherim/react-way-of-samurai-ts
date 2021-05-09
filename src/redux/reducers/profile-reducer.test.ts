@@ -1,10 +1,11 @@
 import {
-    addPostAC,
+    profileActions,
     PostType,
     ProfilePageType,
     profileReducer,
-    updateNewPostTextAC,
 } from "./profile-reducer";
+
+const { addPostAC, updateNewPostTextAC } = profileActions;
 
 let state: ProfilePageType;
 
