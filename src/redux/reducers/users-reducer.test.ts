@@ -1,5 +1,7 @@
 import {
+    changeCurrentPageAC,
     followAC,
+    setTotalUsersCountAC,
     setUsersAC,
     unfollowtAC,
     UsersPageType,
@@ -37,6 +39,9 @@ beforeEach(() => {
                 uniqueUrlName: null,
             },
         ],
+        pageSize: 5,
+        totalUsersCount: 0,
+        currentPage: 1,
     };
 });
 
@@ -101,11 +106,18 @@ test("users should be added in state", () => {
 
     const endState = usersReducer(state, setUsersAC(newUsers));
 
-    expect(endState.users).toEqual([...state.users, ...newUsers]);
-    expect(endState.users.length).toBe(4);
+    expect(endState.users).toEqual([...newUsers]);
+    expect(endState.users.length).toBe(2);
+});
 
-    const endState2 = usersReducer(endState, setUsersAC(newUsers));
+test("current page should be changed", () => {
+    const endState = usersReducer(state, changeCurrentPageAC(2));
 
-    expect(endState2.users).toEqual([...endState.users, ...newUsers]);
-    expect(endState2.users.length).toBe(6);
+    expect(endState.currentPage).toBe(2);
+});
+
+test("total users count should be added", () => {
+    const endState = usersReducer(state, setTotalUsersCountAC(50));
+
+    expect(endState.totalUsersCount).toBe(50);
 });

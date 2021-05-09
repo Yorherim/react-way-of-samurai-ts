@@ -2,6 +2,8 @@ enum USERS_ACTIONS_TYPE {
     FOLLOW = "FOLLOW",
     UNFOLLOW = "UNFOLLOW",
     SET_USERS = "SET_USERS",
+    CHANGE_CURRENT_PAGE = "CHANGE_CURRENT_PAGE",
+    SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT",
 }
 
 export type UsersType = {
@@ -19,10 +21,15 @@ export type UsersPageType = typeof initialState;
 type ActionsType =
     | ReturnType<typeof followAC>
     | ReturnType<typeof unfollowtAC>
-    | ReturnType<typeof setUsersAC>;
+    | ReturnType<typeof setUsersAC>
+    | ReturnType<typeof changeCurrentPageAC>
+    | ReturnType<typeof setTotalUsersCountAC>;
 
 const initialState = {
     users: [] as UsersType[],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1,
 };
 
 export const usersReducer = (
@@ -53,7 +60,17 @@ export const usersReducer = (
         case USERS_ACTIONS_TYPE.SET_USERS:
             return {
                 ...state,
-                users: [...state.users, ...action.users],
+                users: [...action.users],
+            };
+        case USERS_ACTIONS_TYPE.CHANGE_CURRENT_PAGE:
+            return {
+                ...state,
+                currentPage: action.page,
+            };
+        case USERS_ACTIONS_TYPE.SET_TOTAL_USERS_COUNT:
+            return {
+                ...state,
+                totalUsersCount: action.totalCount,
             };
         default:
             return state;
@@ -72,4 +89,12 @@ export const unfollowtAC = (userId: number) => ({
 export const setUsersAC = (users: UsersType[]) => ({
     type: USERS_ACTIONS_TYPE.SET_USERS as const,
     users,
+});
+export const changeCurrentPageAC = (page: number) => ({
+    type: USERS_ACTIONS_TYPE.CHANGE_CURRENT_PAGE as const,
+    page,
+});
+export const setTotalUsersCountAC = (totalCount: number) => ({
+    type: USERS_ACTIONS_TYPE.SET_TOTAL_USERS_COUNT as const,
+    totalCount,
 });

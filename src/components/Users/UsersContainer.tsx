@@ -4,7 +4,9 @@ import { Dispatch } from "redux";
 import Users from "./Users";
 import { AppStateType } from "../../redux/redux-store";
 import {
+    changeCurrentPageAC,
     followAC,
+    setTotalUsersCountAC,
     setUsersAC,
     unfollowtAC,
     UsersType,
@@ -16,6 +18,9 @@ export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 const mapStateToProps = (state: AppStateType) => ({
     users: state.usersPage.users,
+    pageSize: state.usersPage.pageSize,
+    totalUsersCount: state.usersPage.totalUsersCount,
+    currentPage: state.usersPage.currentPage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -28,9 +33,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     setUsers: (users: UsersType[]) => {
         dispatch(setUsersAC(users));
     },
+    changeCurrentPage: (page: number) => {
+        dispatch(changeCurrentPageAC(page));
+    },
+    setTotalUsersCount: (totalCount: number) => {
+        dispatch(setTotalUsersCountAC(totalCount));
+    },
 });
 
-const MyPostsContainer = connect<
+export default connect<
     MapStateToPropsType,
     MapDispatchToPropsType,
     {},
@@ -39,5 +50,3 @@ const MyPostsContainer = connect<
     mapStateToProps,
     mapDispatchToProps
 )(Users);
-
-export default MyPostsContainer;

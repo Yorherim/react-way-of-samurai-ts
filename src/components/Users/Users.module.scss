@@ -1,5 +1,19 @@
+.pages {
+    margin: 5px 10px;
+
+    span {
+        margin: 3px;
+        cursor: pointer;
+
+        &.selectedPage {
+            font-weight: bold;
+            color: gold;
+        }
+    }
+}
+
 .user {
-    margin: 10px;
+    margin: 20px 10px;
 
     img {
         width: 90px;
