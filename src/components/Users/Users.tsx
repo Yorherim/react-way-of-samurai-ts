@@ -1,102 +1,84 @@
 import React from "react";
-import axios from "axios";
 
 import classes from "./Users.module.scss";
 import userPhoto from "../../assets/images/user.png";
 
-import { UsersPropsType } from "./UsersContainer";
+import { UsersType } from "../../redux/reducers/users-reducer";
 
-class Users extends React.Component<UsersPropsType> {
-    componentDidMount() {
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
-            )
-            .then((res) => {
-                this.props.setUsers(res.data.items);
-                this.props.setTotalUsersCount(res.data.totalCount);
-            })
-            .catch((err) => console.error(err));
+type UsersPropsType = {
+    pageSize: number;
+    currentPage: number;
+    follow: (userId: number) => void;
+    unfollow: (userId: number) => void;
+    users: UsersType[];
+    onChangePage: (p: number) => void;
+    totalUsersCount: number;
+};
+
+function Users({
+    pageSize,
+    currentPage,
+    follow,
+    unfollow,
+    users,
+    onChangePage,
+    totalUsersCount,
+}: UsersPropsType) {
+    // ----- for pagination -----
+    const pagesCount = Math.ceil(50 / pageSize); // set 50 cause so many users (too much pagination)
+    const pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
     }
+    // --------------------
 
-    onChangePage = (page: number) => {
-        this.props.changeCurrentPage(page);
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
-            )
-            .then((res) => this.props.setUsers(res.data.items))
-            .catch((err) => console.error(err));
-    };
+    return (
+        <>
+            <div className={classes.pages}>
+                {pages.map((p, i) => (
+                    <span
+                        key={`${p}_${i}`}
+                        className={
+                            currentPage === p ? classes.selectedPage : ""
+                        }
+                        onClick={() => onChangePage(p)}
+                    >
+                        {p}
+                    </span>
+                ))}
+            </div>
 
-    render() {
-        const {
-            users,
-            follow,
-            unfollow,
-            totalUsersCount,
-            pageSize,
-            currentPage,
-        } = this.props;
+            {users.map((user, i) => {
+                const followUser = () => follow(user.id);
+                const unfollowUser = () => unfollow(user.id);
 
-        // ----- for pagination -----
-        const pagesCount = Math.ceil(50 / pageSize); // set 50 cause so many users (too much pagination)
-        const pages = [];
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-        }
-        // --------------------
-
-        return (
-            <>
-                <div className={classes.pages}>
-                    {pages.map((p, i) => (
-                        <span
-                            key={`${p}_${i}`}
-                            className={
-                                currentPage === p ? classes.selectedPage : ""
-                            }
-                            onClick={() => this.onChangePage(p)}
-                        >
-                            {p}
-                        </span>
-                    ))}
-                </div>
-
-                {users.map((user, i) => {
-                    const followUser = () => follow(user.id);
-                    const unfollowUser = () => unfollow(user.id);
-
-                    return (
-                        <div key={`${user.id}_${i}`} className={classes.user}>
-                            <div>
-                                <img
-                                    src={
-                                        user.photos.small
-                                            ? user.photos.small
-                                            : userPhoto
-                                    }
-                                    alt="avatar"
-                                />
-                            </div>
-                            <div>
-                                {user.followed ? (
-                                    <button onClick={unfollowUser}>
-                                        unfollow
-                                    </button>
-                                ) : (
-                                    <button onClick={followUser}>follow</button>
-                                )}
-                            </div>
-
-                            <div>{user.name}</div>
-                            <div>{user.status}</div>
+                return (
+                    <div key={`${user.id}_${i}`} className={classes.user}>
+                        <div>
+                            <img
+                                src={
+                                    user.photos.small
+                                        ? user.photos.small
+                                        : userPhoto
+                                }
+                                alt="avatar"
+                            />
                         </div>
-                    );
-                })}
-            </>
-        );
-    }
+                        <div>
+                            {user.followed ? (
+                                <button onClick={unfollowUser}>unfollow</button>
+                            ) : (
+                                <button onClick={followUser}>follow</button>
+                            )}
+                        </div>
+
+                        <div>{user.name}</div>
+                        <div>{user.status}</div>
+                    </div>
+                );
+            })}
+        </>
+    );
 }
 
 export default Users;
