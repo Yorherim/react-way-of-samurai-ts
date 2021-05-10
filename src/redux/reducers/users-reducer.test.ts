@@ -6,12 +6,12 @@ import {
 } from "./users-reducer";
 
 const {
-    changeCurrentPageAC,
-    followAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    unfollowAC,
-    toggleIsFetchingAC,
+    changeCurrentPage,
+    follow,
+    setTotalUsersCount,
+    setUsers,
+    unfollow,
+    toggleIsFetching,
 } = usersActions;
 
 let state: UsersPageType;
@@ -54,7 +54,7 @@ beforeEach(() => {
 test("user should be followed", () => {
     const userId = state.users[0].id;
 
-    const endState = usersReducer(state, followAC(userId));
+    const endState = usersReducer(state, follow(userId));
 
     expect(endState.users[0].followed).toBeTruthy();
     expect(endState.users[1].followed).toBeTruthy();
@@ -62,7 +62,7 @@ test("user should be followed", () => {
 
 test("user should be unfollowed", () => {
     const userId = state.users[1].id;
-    const endState = usersReducer(state, unfollowAC(userId));
+    const endState = usersReducer(state, unfollow(userId));
 
     expect(endState.users[1].followed).toBeFalsy();
     expect(endState.users[0].followed).toBeFalsy();
@@ -71,12 +71,12 @@ test("user should be unfollowed", () => {
 test("user should be correct change follow/unfollow", () => {
     const userId = state.users[0].id;
 
-    const endState = usersReducer(state, followAC(userId));
+    const endState = usersReducer(state, follow(userId));
 
     expect(endState.users[0].followed).toBeTruthy();
     expect(endState.users[1].followed).toBeTruthy();
 
-    const endState2 = usersReducer(endState, unfollowAC(userId));
+    const endState2 = usersReducer(endState, unfollow(userId));
 
     expect(endState2.users[0].followed).toBeFalsy();
     expect(endState2.users[1].followed).toBeTruthy();
@@ -110,28 +110,28 @@ test("users should be added in state", () => {
         },
     ];
 
-    const endState = usersReducer(state, setUsersAC(newUsers));
+    const endState = usersReducer(state, setUsers(newUsers));
 
     expect(endState.users).toEqual([...newUsers]);
     expect(endState.users.length).toBe(2);
 });
 
 test("current page should be changed", () => {
-    const endState = usersReducer(state, changeCurrentPageAC(2));
+    const endState = usersReducer(state, changeCurrentPage(2));
 
     expect(endState.currentPage).toBe(2);
 });
 
 test("total users count should be added", () => {
-    const endState = usersReducer(state, setTotalUsersCountAC(50));
+    const endState = usersReducer(state, setTotalUsersCount(50));
 
     expect(endState.totalUsersCount).toBe(50);
 });
 
 test("isFetching should be toggle", () => {
-    const endState = usersReducer(state, toggleIsFetchingAC(true));
+    const endState = usersReducer(state, toggleIsFetching(true));
     expect(endState.isFetching).toBeTruthy();
 
-    const endState2 = usersReducer(endState, toggleIsFetchingAC(false));
+    const endState2 = usersReducer(endState, toggleIsFetching(false));
     expect(endState2.isFetching).toBeFalsy();
 });

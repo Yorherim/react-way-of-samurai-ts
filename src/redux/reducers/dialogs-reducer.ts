@@ -52,10 +52,10 @@ export const dialogsReducer = (
 
 // actions creators
 export const dialogsActions = {
-    addMessageAC: () => ({
+    addMessage: () => ({
         type: DIALOGS_ACTIONS_TYPE.ADD_MESSAGE as const,
     }),
-    updateNewMessageTextAC: (messageText: string) => ({
+    updateNewMessageText: (messageText: string) => ({
         type: DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT as const,
         messageText,
     }),

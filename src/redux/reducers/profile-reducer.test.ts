@@ -5,7 +5,7 @@ import {
     profileReducer,
 } from "./profile-reducer";
 
-const { addPostAC, updateNewPostTextAC } = profileActions;
+const { addPost, updateNewPostText } = profileActions;
 
 let state: ProfilePageType;
 
@@ -23,7 +23,7 @@ test("new post should be added", () => {
     const newPost: PostType = { id: 5, message: "hello", likesCount: 0 };
     state.newPostText = newPost.message;
 
-    const endState = profileReducer(state, addPostAC());
+    const endState = profileReducer(state, addPost());
 
     expect(endState.postsData.length).toBe(3);
     expect(endState.newPostText).toBe("");
@@ -35,7 +35,7 @@ test("new post should be added", () => {
 test("newPostText should be update", () => {
     const newMessage = "ra";
 
-    const endState = profileReducer(state, updateNewPostTextAC(newMessage));
+    const endState = profileReducer(state, updateNewPostText(newMessage));
 
     expect(endState.newPostText).toBe("ra");
 });

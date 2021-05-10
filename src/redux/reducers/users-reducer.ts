@@ -82,27 +82,27 @@ export const usersReducer = (
 
 // ----- action creators -----
 export const usersActions = {
-    followAC: (userId: number) => ({
+    follow: (userId: number) => ({
         type: USERS_ACTIONS_TYPE.FOLLOW as const,
         userId,
     }),
-    unfollowAC: (userId: number) => ({
+    unfollow: (userId: number) => ({
         type: USERS_ACTIONS_TYPE.UNFOLLOW as const,
         userId,
     }),
-    setUsersAC: (users: UsersType[]) => ({
+    setUsers: (users: UsersType[]) => ({
         type: USERS_ACTIONS_TYPE.SET_USERS as const,
         users,
     }),
-    changeCurrentPageAC: (page: number) => ({
+    changeCurrentPage: (page: number) => ({
         type: USERS_ACTIONS_TYPE.CHANGE_CURRENT_PAGE as const,
         page,
     }),
-    setTotalUsersCountAC: (totalCount: number) => ({
+    setTotalUsersCount: (totalCount: number) => ({
         type: USERS_ACTIONS_TYPE.SET_TOTAL_USERS_COUNT as const,
         totalCount,
     }),
-    toggleIsFetchingAC: (isFetching: boolean) => ({
+    toggleIsFetching: (isFetching: boolean) => ({
         type: USERS_ACTIONS_TYPE.TOGGLE_IS_FETCHING as const,
         isFetching,
     }),

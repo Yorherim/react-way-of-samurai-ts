@@ -42,10 +42,10 @@ export const profileReducer = (
 
 // action creators
 export const profileActions = {
-    addPostAC: () => ({
+    addPost: () => ({
         type: PROFILE_ACTIONS_TYPE.ADD_POST as const,
     }),
-    updateNewPostTextAC: (postText: string) => ({
+    updateNewPostText: (postText: string) => ({
         type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT as const,
         postText,
     }),
