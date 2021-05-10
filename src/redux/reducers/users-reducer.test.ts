@@ -11,6 +11,7 @@ const {
     setTotalUsersCountAC,
     setUsersAC,
     unfollowAC,
+    toggleIsFetchingAC,
 } = usersActions;
 
 let state: UsersPageType;
@@ -46,6 +47,7 @@ beforeEach(() => {
         pageSize: 5,
         totalUsersCount: 0,
         currentPage: 1,
+        isFetching: false,
     };
 });
 
@@ -124,4 +126,12 @@ test("total users count should be added", () => {
     const endState = usersReducer(state, setTotalUsersCountAC(50));
 
     expect(endState.totalUsersCount).toBe(50);
+});
+
+test("isFetching should be toggle", () => {
+    const endState = usersReducer(state, toggleIsFetchingAC(true));
+    expect(endState.isFetching).toBeTruthy();
+
+    const endState2 = usersReducer(endState, toggleIsFetchingAC(false));
+    expect(endState2.isFetching).toBeFalsy();
 });

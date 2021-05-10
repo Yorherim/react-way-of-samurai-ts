@@ -4,6 +4,7 @@ enum USERS_ACTIONS_TYPE {
     SET_USERS = "SET_USERS",
     CHANGE_CURRENT_PAGE = "CHANGE_CURRENT_PAGE",
     SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT",
+    TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING",
 }
 
 export type UsersType = {
@@ -26,6 +27,7 @@ const initialState = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
+    isFetching: false,
 };
 
 export const usersReducer = (
@@ -68,6 +70,11 @@ export const usersReducer = (
                 ...state,
                 totalUsersCount: action.totalCount,
             };
+        case USERS_ACTIONS_TYPE.TOGGLE_IS_FETCHING:
+            return {
+                ...state,
+                isFetching: action.isFetching,
+            };
         default:
             return state;
     }
@@ -94,6 +101,10 @@ export const usersActions = {
     setTotalUsersCountAC: (totalCount: number) => ({
         type: USERS_ACTIONS_TYPE.SET_TOTAL_USERS_COUNT as const,
         totalCount,
+    }),
+    toggleIsFetchingAC: (isFetching: boolean) => ({
+        type: USERS_ACTIONS_TYPE.TOGGLE_IS_FETCHING as const,
+        isFetching,
     }),
 };
 // --------------------
