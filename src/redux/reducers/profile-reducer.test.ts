@@ -1,13 +1,19 @@
 import {
     profileActions,
     PostType,
-    ProfilePageType,
+    ProfileStateType,
     profileReducer,
+    ProfileType,
 } from "./profile-reducer";
 
-const { addPost, updateNewPostText } = profileActions;
+const {
+    addPost,
+    updateNewPostText,
+    setUserProfile,
+    toggleIsFetching,
+} = profileActions;
 
-let state: ProfilePageType;
+let state: ProfileStateType;
 
 beforeEach(() => {
     state = {
@@ -16,6 +22,8 @@ beforeEach(() => {
             { id: 2, message: "Hi", likesCount: 7 },
         ],
         newPostText: "",
+        profile: {} as ProfileType,
+        isFetching: false,
     };
 });
 
@@ -38,4 +46,43 @@ test("newPostText should be update", () => {
     const endState = profileReducer(state, updateNewPostText(newMessage));
 
     expect(endState.newPostText).toBe("ra");
+});
+
+test("profile user should be set", async () => {
+    const data: ProfileType = {
+        aboutMe: "я круто чувак 1001%",
+        contacts: {
+            facebook: "facebook.com",
+            website: null,
+            vk: "vk.com/dimych",
+            twitter: "https://twitter.com/@sdf",
+            instagram: "instagra.com/sds",
+            youtube: null,
+            github: "github.com",
+            mainLink: null,
+        },
+        lookingForAJob: true,
+        lookingForAJobDescription: "не ищу, а дурачусь",
+        fullName: "samurai dimych",
+        userId: 2,
+        photos: {
+            small:
+                "https://social-network.samuraijs.com/activecontent/images/users/2/user-small.jpg?v=0",
+            large:
+                "https://social-network.samuraijs.com/activecontent/images/users/2/user.jpg?v=0",
+        },
+    };
+
+    const endState = profileReducer(state, setUserProfile(data));
+
+    expect(endState.profile.userId).toBe(2);
+    expect(endState.profile.fullName).toBe("samurai dimych");
+});
+
+test("isFetching should be toggle", () => {
+    const endState = profileReducer(state, toggleIsFetching(true));
+    expect(endState.isFetching).toBeTruthy();
+
+    const endState2 = profileReducer(endState, toggleIsFetching(false));
+    expect(endState2.isFetching).toBeFalsy();
 });

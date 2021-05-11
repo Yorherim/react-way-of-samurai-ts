@@ -6,12 +6,12 @@ import "./App.scss";
 import {
     Header,
     Navbar,
-    Profile,
     News,
     Music,
     Settings,
     DialogsContainer,
     UsersContainer,
+    ProfileContainer,
 } from "./components";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
             <Header />
             <Navbar />
             <div className="app-wrapper--content">
-                <Route path="/profile" render={() => <Profile />} />
+                <Route path="/profile" render={() => <ProfileContainer />} />
                 <Route path="/dialogs" render={() => <DialogsContainer />} />
                 <Route path="/users" render={() => <UsersContainer />} />
                 <Route path="/news" component={News} />

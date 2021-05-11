@@ -9,8 +9,7 @@ import Preloader from "../common/Preloader/Preloader2";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = typeof mapDispatchToProps;
-export type UsersAPIContainerPropsType = MapStateToPropsType &
-    MapDispatchToPropsType;
+type UsersAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
     componentDidMount() {

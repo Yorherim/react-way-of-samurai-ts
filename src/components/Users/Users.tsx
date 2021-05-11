@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import classes from "./Users.module.scss";
 import userPhoto from "../../assets/images/user.png";
@@ -55,14 +56,16 @@ function Users({
                 return (
                     <div key={`${user.id}_${i}`} className={classes.user}>
                         <div>
-                            <img
-                                src={
-                                    user.photos.small
-                                        ? user.photos.small
-                                        : userPhoto
-                                }
-                                alt="avatar"
-                            />
+                            <NavLink to={`/profile/${user.id}`}>
+                                <img
+                                    src={
+                                        user.photos.small
+                                            ? user.photos.small
+                                            : userPhoto
+                                    }
+                                    alt="avatar"
+                                />
+                            </NavLink>
                         </div>
                         <div>
                             {user.followed ? (
