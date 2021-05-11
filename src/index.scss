@@ -2,6 +2,9 @@ body {
     margin: 0;
     background: #212227;
 
+    // fix scroll bar jump
+    padding: 0 calc(20px - (100vw - 100%)) 0 0;
+
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;

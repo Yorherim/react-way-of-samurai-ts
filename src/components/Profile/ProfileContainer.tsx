@@ -6,16 +6,27 @@ import Profile from "./Profile";
 import { AppStateType } from "../../redux/redux-store";
 import { profileActions } from "../../redux/reducers/profile-reducer";
 import Preloader from "../common/Preloader/Preloader2";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
+type PathParamsType = {
+    userId: string;
+};
 type MapStateToPropsType = ReturnType<typeof MapStateToProps>;
 type MapDispatchToPropsType = typeof MapDispatchToProps;
-type ProfileContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
+type OwnPropsType = MapStateToPropsType & MapDispatchToPropsType;
+type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
+    OwnPropsType;
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         this.props.toggleIsFetching(true);
+        const userId = this.props.match.params.userId
+            ? this.props.match.params.userId
+            : 2;
         axios
-            .get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
+            .get(
+                `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
+            )
             .then((res) => {
                 this.props.toggleIsFetching(false);
                 this.props.setUserProfile(res.data);
@@ -50,4 +61,4 @@ export default connect<
 >(
     MapStateToProps,
     MapDispatchToProps
-)(ProfileContainer);
+)(withRouter(ProfileContainer));
