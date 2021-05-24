@@ -30,6 +30,7 @@ beforeEach(() => {
 test("new post should be added", () => {
     const newPost: PostType = { id: 5, message: "hello", likesCount: 0 };
     state.newPostText = newPost.message;
+    console.log("test");
 
     const endState = profileReducer(state, addPost());
 
@@ -48,7 +49,7 @@ test("newPostText should be update", () => {
     expect(endState.newPostText).toBe("ra");
 });
 
-test("profile user should be set", async () => {
+test("profile user should be set", () => {
     const data: ProfileType = {
         aboutMe: "я круто чувак 1001%",
         contacts: {

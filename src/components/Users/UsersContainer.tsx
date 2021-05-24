@@ -13,17 +13,19 @@ type UsersAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
-            )
-            .then((res) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUsers(res.data.items);
-                this.props.setTotalUsersCount(res.data.totalCount);
-            })
-            .catch((err) => console.error(err));
+        if (this.props.users.length === 0) {
+            this.props.toggleIsFetching(true);
+            axios
+                .get(
+                    `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+                )
+                .then((res) => {
+                    this.props.toggleIsFetching(false);
+                    this.props.setUsers(res.data.items);
+                    this.props.setTotalUsersCount(res.data.totalCount);
+                })
+                .catch((err) => console.error(err));
+        }
     }
 
     onChangePage = (page: number) => {

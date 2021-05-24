@@ -19,19 +19,21 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
-        this.props.toggleIsFetching(true);
         const userId = this.props.match.params.userId
             ? this.props.match.params.userId
             : 2;
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
-            )
-            .then((res) => {
-                this.props.toggleIsFetching(false);
-                this.props.setUserProfile(res.data);
-            })
-            .catch((err) => console.error(err));
+        if (!this.props.profile || userId !== this.props.profile.userId) {
+            this.props.toggleIsFetching(true);
+            axios
+                .get(
+                    `https://social-network.samuraijs.com/api/1.0/profile/${userId}`
+                )
+                .then((res) => {
+                    this.props.toggleIsFetching(false);
+                    this.props.setUserProfile(res.data);
+                })
+                .catch((err) => console.error(err));
+        }
     }
 
     render() {
