@@ -30,7 +30,6 @@ beforeEach(() => {
 test("new post should be added", () => {
     const newPost: PostType = { id: 5, message: "hello", likesCount: 0 };
     state.newPostText = newPost.message;
-    console.log("test");
 
     const endState = profileReducer(state, addPost());
 

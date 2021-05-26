@@ -4,7 +4,6 @@ import { Route } from "react-router-dom";
 import "./App.scss";
 
 import {
-    Header,
     Navbar,
     News,
     Music,
@@ -12,12 +11,13 @@ import {
     DialogsContainer,
     UsersContainer,
     ProfileContainer,
+    HeaderContainer,
 } from "./components";
 
 function App() {
     return (
         <div className="app-wrapper">
-            <Header />
+            <HeaderContainer />
             <Navbar />
             <div className="app-wrapper--content">
                 <Route
