@@ -6,6 +6,7 @@ import Users from "./Users";
 import { AppStateType } from "../../redux/redux-store";
 import { usersActions } from "../../redux/reducers/users-reducer";
 import Preloader from "../common/Preloader/Preloader2";
+import { usersAPI } from "../../api/api";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = typeof mapDispatchToProps;
@@ -15,17 +16,12 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
     componentDidMount() {
         if (this.props.users.length === 0) {
             this.props.toggleIsFetching(true);
-            axios
-                .get(
-                    `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .then((res) => {
+            usersAPI
+                .getUsers(this.props.currentPage, this.props.pageSize)
+                .then((data) => {
                     this.props.toggleIsFetching(false);
-                    this.props.setUsers(res.data.items);
-                    this.props.setTotalUsersCount(res.data.totalCount);
+                    this.props.setUsers(data.items);
+                    this.props.setTotalUsersCount(data.totalCount);
                 })
                 .catch((err) => console.error(err));
         }
@@ -34,36 +30,22 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
     onChangePage = (page: number) => {
         this.props.changeCurrentPage(page);
         this.props.toggleIsFetching(true);
-        axios
-            .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
-                {
-                    withCredentials: true,
-                }
-            )
-            .then((res) => {
+        usersAPI
+            .getUsers(page, this.props.pageSize)
+            .then((data) => {
                 this.props.toggleIsFetching(false);
-                this.props.setUsers(res.data.items);
+                this.props.setUsers(data.items);
             })
             .catch((err) => console.error(err));
     };
 
     followUser = (userId: number) => {
         this.props.toggleIsFetching(true);
-        axios
-            .post(
-                `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-                {},
-                {
-                    withCredentials: true,
-                    headers: {
-                        "API-KEY": "f6d122c0-e13a-41a0-8a89-732f8ec98129",
-                    },
-                }
-            )
-            .then((res) => {
+        usersAPI
+            .followUser(userId)
+            .then((data) => {
                 this.props.toggleIsFetching(false);
-                if (res.data.resultCode === 0) {
+                if (data.resultCode === 0) {
                     this.props.follow(userId);
                 }
             })
@@ -72,19 +54,11 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
 
     unfollowUser = (userId: number) => {
         this.props.toggleIsFetching(true);
-        axios
-            .delete(
-                `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-                {
-                    withCredentials: true,
-                    headers: {
-                        "API-KEY": "f6d122c0-e13a-41a0-8a89-732f8ec98129",
-                    },
-                }
-            )
-            .then((res) => {
+        usersAPI
+            .unfollowUser(userId)
+            .then((data) => {
                 this.props.toggleIsFetching(false);
-                if (res.data.resultCode === 0) {
+                if (data.resultCode === 0) {
                     this.props.unfollow(userId);
                 }
             })
