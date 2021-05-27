@@ -14,6 +14,7 @@ type UsersPropsType = {
     totalUsersCount: number;
     followUser: (userId: number) => void;
     unfollowUser: (userId: number) => void;
+    followingInProgress: number[];
 };
 
 function Users({
@@ -24,6 +25,7 @@ function Users({
     totalUsersCount,
     followUser,
     unfollowUser,
+    followingInProgress,
 }: UsersPropsType) {
     // ----- for pagination -----
     const pagesCount = Math.ceil(50 / pageSize); // set 50 cause so many users (too much pagination)
@@ -66,11 +68,21 @@ function Users({
                         </div>
                         <div>
                             {user.followed ? (
-                                <button onClick={() => unfollowUser(user.id)}>
+                                <button
+                                    disabled={followingInProgress.includes(
+                                        user.id
+                                    )}
+                                    onClick={() => unfollowUser(user.id)}
+                                >
                                     unfollow
                                 </button>
                             ) : (
-                                <button onClick={() => followUser(user.id)}>
+                                <button
+                                    disabled={followingInProgress.includes(
+                                        user.id
+                                    )}
+                                    onClick={() => followUser(user.id)}
+                                >
                                     follow
                                 </button>
                             )}

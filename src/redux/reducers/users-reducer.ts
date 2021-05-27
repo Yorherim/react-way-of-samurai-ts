@@ -5,6 +5,7 @@ enum USERS_ACTIONS_TYPE {
     CHANGE_CURRENT_PAGE = "CHANGE_CURRENT_PAGE",
     SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT",
     TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING",
+    TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS",
 }
 
 export type UsersType = {
@@ -28,6 +29,7 @@ const initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
+    followingInProgress: [] as number[],
 };
 
 export const usersReducer = (
@@ -75,6 +77,15 @@ export const usersReducer = (
                 ...state,
                 isFetching: action.isFetching,
             };
+        case USERS_ACTIONS_TYPE.TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.isFollowing
+                    ? [...state.followingInProgress, action.userId]
+                    : state.followingInProgress.filter((id) => {
+                          return id !== action.userId;
+                      }),
+            };
         default:
             return state;
     }
@@ -105,6 +116,11 @@ export const usersActions = {
     toggleIsFetching: (isFetching: boolean) => ({
         type: USERS_ACTIONS_TYPE.TOGGLE_IS_FETCHING as const,
         isFetching,
+    }),
+    toggleIsFollowingProgress: (userId: number, isFollowing: boolean) => ({
+        type: USERS_ACTIONS_TYPE.TOGGLE_IS_FOLLOWING_PROGRESS as const,
+        userId,
+        isFollowing,
     }),
 };
 // --------------------
