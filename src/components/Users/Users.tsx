@@ -9,21 +9,21 @@ import { UsersType } from "../../redux/reducers/users-reducer";
 type UsersPropsType = {
     pageSize: number;
     currentPage: number;
-    follow: (userId: number) => void;
-    unfollow: (userId: number) => void;
     users: UsersType[];
     onChangePage: (p: number) => void;
     totalUsersCount: number;
+    followUser: (userId: number) => void;
+    unfollowUser: (userId: number) => void;
 };
 
 function Users({
     pageSize,
     currentPage,
-    follow,
-    unfollow,
     users,
     onChangePage,
     totalUsersCount,
+    followUser,
+    unfollowUser,
 }: UsersPropsType) {
     // ----- for pagination -----
     const pagesCount = Math.ceil(50 / pageSize); // set 50 cause so many users (too much pagination)
@@ -50,9 +50,6 @@ function Users({
             </div>
 
             {users.map((user, i) => {
-                const followUser = () => follow(user.id);
-                const unfollowUser = () => unfollow(user.id);
-
                 return (
                     <div key={`${user.id}_${i}`} className={classes.user}>
                         <div>
@@ -69,9 +66,13 @@ function Users({
                         </div>
                         <div>
                             {user.followed ? (
-                                <button onClick={unfollowUser}>unfollow</button>
+                                <button onClick={() => unfollowUser(user.id)}>
+                                    unfollow
+                                </button>
                             ) : (
-                                <button onClick={followUser}>follow</button>
+                                <button onClick={() => followUser(user.id)}>
+                                    follow
+                                </button>
                             )}
                         </div>
 

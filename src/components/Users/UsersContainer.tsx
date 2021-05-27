@@ -17,7 +17,10 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
             this.props.toggleIsFetching(true);
             axios
                 .get(
-                    `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+                    `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`,
+                    {
+                        withCredentials: true,
+                    }
                 )
                 .then((res) => {
                     this.props.toggleIsFetching(false);
@@ -33,7 +36,10 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
         this.props.toggleIsFetching(true);
         axios
             .get(
-                `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
+                `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`,
+                {
+                    withCredentials: true,
+                }
             )
             .then((res) => {
                 this.props.toggleIsFetching(false);
@@ -42,11 +48,52 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
             .catch((err) => console.error(err));
     };
 
+    followUser = (userId: number) => {
+        this.props.toggleIsFetching(true);
+        axios
+            .post(
+                `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+                {},
+                {
+                    withCredentials: true,
+                    headers: {
+                        "API-KEY": "f6d122c0-e13a-41a0-8a89-732f8ec98129",
+                    },
+                }
+            )
+            .then((res) => {
+                this.props.toggleIsFetching(false);
+                if (res.data.resultCode === 0) {
+                    this.props.follow(userId);
+                }
+            })
+            .catch((err) => console.error(err));
+    };
+
+    unfollowUser = (userId: number) => {
+        this.props.toggleIsFetching(true);
+        axios
+            .delete(
+                `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        "API-KEY": "f6d122c0-e13a-41a0-8a89-732f8ec98129",
+                    },
+                }
+            )
+            .then((res) => {
+                this.props.toggleIsFetching(false);
+                if (res.data.resultCode === 0) {
+                    this.props.unfollow(userId);
+                }
+            })
+            .catch((err) => console.error(err));
+    };
+
     render() {
         const {
             users,
-            follow,
-            unfollow,
             totalUsersCount,
             pageSize,
             currentPage,
@@ -59,11 +106,11 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
                 <Users
                     pageSize={pageSize}
                     currentPage={currentPage}
-                    follow={follow}
-                    unfollow={unfollow}
                     users={users}
                     onChangePage={this.onChangePage}
                     totalUsersCount={totalUsersCount}
+                    followUser={this.followUser}
+                    unfollowUser={this.unfollowUser}
                 />
             </>
         );
