@@ -4,14 +4,14 @@ import { NavLink } from "react-router-dom";
 import classes from "./Users.module.scss";
 import userPhoto from "../../assets/images/user.png";
 
-import { UsersType } from "../../redux/reducers/users-reducer";
+import { UsersType } from "../../api/api";
 
 type UsersPropsType = {
     pageSize: number;
     currentPage: number;
     users: UsersType[];
     onChangePage: (p: number) => void;
-    totalUsersCount: number;
+    totalUsersCount?: number;
     followUser: (userId: number) => void;
     unfollowUser: (userId: number) => void;
     followingInProgress: number[];

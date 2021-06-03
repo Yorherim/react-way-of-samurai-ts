@@ -1,3 +1,5 @@
+import { AppActionsType } from "../redux-store";
+
 enum AUTH_ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
 }
@@ -9,7 +11,7 @@ export type AuthStateType = {
     isAuth: boolean;
 };
 type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
-type ActionsTypes = ReturnType<InferValueTypes<typeof authActions>>;
+export type AuthActionsTypes = ReturnType<InferValueTypes<typeof authActions>>;
 
 const initialState: AuthStateType = {
     userId: null,
@@ -20,7 +22,7 @@ const initialState: AuthStateType = {
 
 export const authReducer = (
     state: AuthStateType = initialState,
-    action: ActionsTypes
+    action: AuthActionsTypes
 ): AuthStateType => {
     switch (action.type) {
         case AUTH_ACTIONS_TYPE.SET_USER_DATA:

@@ -1,9 +1,5 @@
-import {
-    usersActions,
-    UsersPageType,
-    usersReducer,
-    UsersType,
-} from "./users-reducer";
+import { UsersType } from "../../api/api";
+import { usersActions, UsersPageType, usersReducer } from "./users-reducer";
 
 const {
     changeCurrentPage,
@@ -12,6 +8,7 @@ const {
     setUsers,
     unfollow,
     toggleIsFetching,
+    toggleIsFollowingProgress,
 } = usersActions;
 
 let state: UsersPageType;
@@ -48,6 +45,7 @@ beforeEach(() => {
         totalUsersCount: 0,
         currentPage: 1,
         isFetching: false,
+        followingInProgress: [],
     };
 });
 
@@ -134,4 +132,18 @@ test("isFetching should be toggle", () => {
 
     const endState2 = usersReducer(endState, toggleIsFetching(false));
     expect(endState2.isFetching).toBeFalsy();
+});
+
+test("followingProgress should be toggle", () => {
+    let endState = usersReducer(state, toggleIsFollowingProgress(1, true));
+    expect(endState.followingInProgress).toEqual([1]);
+
+    endState = usersReducer(endState, toggleIsFollowingProgress(2, true));
+    expect(endState.followingInProgress).toEqual([1, 2]);
+
+    let endState2 = usersReducer(endState, toggleIsFollowingProgress(1, false));
+    expect(endState2.followingInProgress).toEqual([2]);
+
+    endState2 = usersReducer(endState2, toggleIsFollowingProgress(2, false));
+    expect(endState2.followingInProgress).toEqual([]);
 });

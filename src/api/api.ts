@@ -1,5 +1,29 @@
 import axios from "axios";
 
+export type UsersType = {
+    followed: boolean;
+    id: number;
+    name: string;
+    photos: {
+        large: string | null;
+        small: string | null;
+    };
+    status: string | null;
+    uniqueUrlName: string | null;
+};
+
+type UsersApiGetUsersType = {
+    error: null;
+    items: Array<UsersType>;
+    totalCount: number;
+};
+type UsersApiFollowUnfollowType = {
+    data: {};
+    fieldsErrors: [];
+    messages: [];
+    resultCode: 0 | 1;
+};
+
 const instance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
     withCredentials: true,
@@ -9,15 +33,21 @@ const instance = axios.create({
 });
 
 export const usersAPI = {
-    getUsers: (currentPage: number, pageSize: number) => {
+    getUsers(currentPage: number, pageSize: number) {
         return instance
-            .get(`users?page=${currentPage}&count=${pageSize}`)
+            .get<UsersApiGetUsersType>(
+                `users?page=${currentPage}&count=${pageSize}`
+            )
             .then((res) => res.data);
     },
-    followUser: (userId: number) => {
-        return instance.post(`follow/${userId}`, {}).then((res) => res.data);
+    followUser(userId: number) {
+        return instance
+            .post<UsersApiFollowUnfollowType>(`follow/${userId}`, {})
+            .then((res) => res.data);
     },
-    unfollowUser: (userId: number) => {
-        return instance.delete(`follow/${userId}`).then((res) => res.data);
+    unfollowUser(userId: number) {
+        return instance
+            .delete<UsersApiFollowUnfollowType>(`follow/${userId}`)
+            .then((res) => res.data);
     },
 };

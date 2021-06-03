@@ -1,3 +1,5 @@
+import { AppActionsType } from "../redux-store";
+
 enum DIALOGS_ACTIONS_TYPE {
     ADD_MESSAGE = "ADD_MESSAGE",
     UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
@@ -12,7 +14,9 @@ export type DialogType = {
 };
 export type DialogsPageType = typeof initialState;
 type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
-type ActionsTypes = ReturnType<InferValueTypes<typeof dialogsActions>>;
+export type DialogsActionsTypes = ReturnType<
+    InferValueTypes<typeof dialogsActions>
+>;
 
 const initialState = {
     dialogsData: [
@@ -31,7 +35,7 @@ const initialState = {
 
 export const dialogsReducer = (
     state: DialogsPageType = initialState,
-    action: ActionsTypes
+    action: DialogsActionsTypes
 ): DialogsPageType => {
     switch (action.type) {
         case DIALOGS_ACTIONS_TYPE.ADD_MESSAGE:

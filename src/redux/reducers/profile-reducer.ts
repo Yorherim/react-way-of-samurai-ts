@@ -1,3 +1,5 @@
+import { AppActionsType } from "../redux-store";
+
 enum PROFILE_ACTIONS_TYPE {
     ADD_POST = "ADD_POST",
     UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
@@ -32,7 +34,9 @@ export type PostType = {
 };
 
 type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
-type ActionsType = ReturnType<InferValueTypes<typeof profileActions>>;
+export type ProfileActionsType = ReturnType<
+    InferValueTypes<typeof profileActions>
+>;
 export type ProfileStateType = typeof initialState;
 
 const initialState = {
@@ -47,7 +51,7 @@ const initialState = {
 
 export const profileReducer = (
     state: ProfileStateType = initialState,
-    action: ActionsType
+    action: ProfileActionsType
 ): ProfileStateType => {
     switch (action.type) {
         case PROFILE_ACTIONS_TYPE.ADD_POST:
