@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from "react";
+import { Redirect } from "react-router-dom";
 
 import classes from "./Dialogs.module.scss";
 
@@ -12,6 +13,7 @@ function Dialogs({
     newMessageText,
     addMessage,
     updateNewMessageText,
+    isAuth,
 }: DialogsPropsType) {
     const sendMessage = () => addMessage();
 
@@ -19,6 +21,9 @@ function Dialogs({
         updateNewMessageText(e.currentTarget.value);
     };
 
+    console.log(isAuth);
+
+    if (!isAuth) return <Redirect to={"/login"} />;
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogs_items}>

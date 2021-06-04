@@ -14,6 +14,7 @@ const mapStateToProps = (state: AppStateType) => ({
     dialogsData: state.dialogsPage.dialogsData,
     messagesData: state.dialogsPage.messagesData,
     newMessageText: state.dialogsPage.newMessageText,
+    isAuth: state.auth.isAuth,
 });
 
 const mapDispatchToProps = {

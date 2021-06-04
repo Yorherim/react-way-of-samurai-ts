@@ -51,8 +51,8 @@ const { setAuthUserData } = authActions;
 export const getAuthUserDataTC = (): ThunkType => async (dispatch) => {
     try {
         const data = await authAPI.me();
-        const { id, email, login } = data.data;
         if (data.resultCode === 0) {
+            const { id, email, login } = data.data;
             dispatch(setAuthUserData(id, email, login));
         }
     } catch (err) {

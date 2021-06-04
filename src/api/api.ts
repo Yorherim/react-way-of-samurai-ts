@@ -12,7 +12,6 @@ export type UsersType = {
     status: string | null;
     uniqueUrlName: string | null;
 };
-
 type UsersApiGetUsersType = {
     error: null;
     items: Array<UsersType>;
