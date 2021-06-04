@@ -2,10 +2,10 @@ import React from "react";
 
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
-import { ProfileType } from "../../redux/reducers/profile-reducer";
+import { ProfileApiGetProfileType } from "../../api/api";
 
 type ProfilePropsType = {
-    profile: ProfileType;
+    profile: ProfileApiGetProfileType;
 };
 
 function Profile({ profile }: ProfilePropsType) {

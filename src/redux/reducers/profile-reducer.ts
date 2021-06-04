@@ -1,4 +1,5 @@
-import { AppActionsType } from "../redux-store";
+import { ThunkType } from "../redux-store";
+import { profileAPI, ProfileApiGetProfileType } from "../../api/api";
 
 enum PROFILE_ACTIONS_TYPE {
     ADD_POST = "ADD_POST",
@@ -6,27 +7,7 @@ enum PROFILE_ACTIONS_TYPE {
     SET_USER_PROFILE = "SET_USER_PROFILE",
     TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING",
 }
-export type ProfileType = {
-    aboutMe: string | null;
-    contacts: {
-        facebook: string | null;
-        website: string | null;
-        vk: string | null;
-        twitter: string | null;
-        instagram: string | null;
-        youtube: string | null;
-        github: string | null;
-        mainLink: string | null;
-    };
-    lookingForAJob: boolean;
-    lookingForAJobDescription: string | null;
-    fullName: string | null;
-    userId: number;
-    photos: {
-        small: string | null;
-        large: string | null;
-    };
-};
+
 export type PostType = {
     id: number;
     message: string;
@@ -45,7 +26,7 @@ const initialState = {
         { id: 2, message: "Hi", likesCount: 7 },
     ] as PostType[],
     newPostText: "",
-    profile: {} as ProfileType,
+    profile: {} as ProfileApiGetProfileType,
     isFetching: false,
 };
 
@@ -83,7 +64,7 @@ export const profileActions = {
         type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT as const,
         postText,
     }),
-    setUserProfile: (profile: ProfileType) => ({
+    setUserProfile: (profile: ProfileApiGetProfileType) => ({
         type: PROFILE_ACTIONS_TYPE.SET_USER_PROFILE as const,
         profile,
     }),
@@ -92,3 +73,18 @@ export const profileActions = {
         isFetching,
     }),
 };
+
+// ----- thunks -----
+const { toggleIsFetching, setUserProfile } = profileActions;
+
+export const getProfileTC = (userId: number): ThunkType => async (dispatch) => {
+    try {
+        dispatch(toggleIsFetching(true));
+        const data = await profileAPI.getProfile(userId);
+        dispatch(toggleIsFetching(false));
+        dispatch(setUserProfile(data));
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+// --------------------

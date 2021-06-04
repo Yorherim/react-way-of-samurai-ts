@@ -137,7 +137,6 @@ export const getUsersTC = (
         dispatch(toggleIsFetching(true));
         const data = await usersAPI.getUsers(currentPage, pageSize);
         dispatch(toggleIsFetching(false));
-        console.log(data.items);
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
     } catch (err) {

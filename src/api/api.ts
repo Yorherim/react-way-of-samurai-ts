@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// ----- users type -----
 export type UsersType = {
     followed: boolean;
     id: number;
@@ -23,6 +24,44 @@ type UsersApiFollowUnfollowType = {
     messages: [];
     resultCode: 0 | 1;
 };
+// --------------------
+
+// ----- profile type -----
+export type ProfileApiGetProfileType = {
+    aboutMe: string | null;
+    contacts: {
+        facebook: string | null;
+        website: string | null;
+        vk: string | null;
+        twitter: string | null;
+        instagram: string | null;
+        youtube: string | null;
+        github: string | null;
+        mainLink: string | null;
+    };
+    lookingForAJob: boolean;
+    lookingForAJobDescription: string | null;
+    fullName: string | null;
+    userId: number;
+    photos: {
+        small: string | null;
+        large: string | null;
+    };
+};
+// --------------------
+
+// ----- auth type -----
+type AuthApiMeType = {
+    data: {
+        id: number;
+        login: string;
+        email: string;
+    };
+    fieldsErrors: [];
+    messages: [];
+    resultCode: 0 | 1;
+};
+// --------------------
 
 const instance = axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
@@ -49,5 +88,19 @@ export const usersAPI = {
         return instance
             .delete<UsersApiFollowUnfollowType>(`follow/${userId}`)
             .then((res) => res.data);
+    },
+};
+
+export const profileAPI = {
+    getProfile(userId: number) {
+        return instance
+            .get<ProfileApiGetProfileType>(`profile/${userId}`)
+            .then((res) => res.data);
+    },
+};
+
+export const authAPI = {
+    me() {
+        return instance.get<AuthApiMeType>(`auth/me`).then((res) => res.data);
     },
 };

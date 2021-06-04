@@ -1,4 +1,5 @@
-import { AppActionsType } from "../redux-store";
+import { ThunkType } from "../redux-store";
+import { authAPI } from "../../api/api";
 
 enum AUTH_ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
@@ -38,8 +39,23 @@ export const authReducer = (
 
 // actions creators
 export const authActions = {
-    setUserData: (userId: number, email: string, login: string) => ({
+    setAuthUserData: (userId: number, email: string, login: string) => ({
         type: AUTH_ACTIONS_TYPE.SET_USER_DATA as const,
         data: { userId, email, login },
     }),
+};
+
+// thunks
+const { setAuthUserData } = authActions;
+
+export const getAuthUserDataTC = (): ThunkType => async (dispatch) => {
+    try {
+        const data = await authAPI.me();
+        const { id, email, login } = data.data;
+        if (data.resultCode === 0) {
+            dispatch(setAuthUserData(id, email, login));
+        }
+    } catch (err) {
+        throw new Error(err);
+    }
 };

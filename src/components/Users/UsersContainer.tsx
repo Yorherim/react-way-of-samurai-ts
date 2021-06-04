@@ -12,7 +12,12 @@ import {
 import Preloader from "../common/Preloader/Preloader2";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
-type MapDispatchToPropsType = typeof mapDispatchToProps;
+type MapDispatchToPropsType = {
+    changeCurrentPage: (page: number) => void;
+    getUsersTC: (currentPage: number, pageSize: number) => void;
+    followUserTC: (userId: number) => void;
+    unfollowUserTC: (userId: number) => void;
+};
 type UsersAPIContainerPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
 class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
@@ -67,19 +72,9 @@ const mapStateToProps = (state: AppStateType) => ({
     followingInProgress: state.usersPage.followingInProgress,
 });
 
-const mapDispatchToProps = {
+export default connect(mapStateToProps, {
     changeCurrentPage: usersActions.changeCurrentPage,
     getUsersTC,
     followUserTC,
     unfollowUserTC,
-};
-
-export default connect<
-    MapStateToPropsType,
-    MapDispatchToPropsType,
-    {},
-    AppStateType
->(
-    mapStateToProps,
-    mapDispatchToProps
-)(UsersAPIContainer);
+})(UsersAPIContainer);

@@ -3,11 +3,10 @@ import React from "react";
 import classes from "./ProfileInfo.module.scss";
 import profileWrapper from "../../../assets/images/profile_wrapper.jpg";
 import userPhoto from "../../../assets/images/user.png";
-
-import { ProfileType } from "../../../redux/reducers/profile-reducer";
+import { ProfileApiGetProfileType } from "../../../api/api";
 
 type ProfileInfoPropsType = {
-    profile: ProfileType;
+    profile: ProfileApiGetProfileType;
 };
 
 function ProfileInfo({ profile }: ProfileInfoPropsType) {

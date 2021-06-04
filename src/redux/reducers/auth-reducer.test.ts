@@ -1,6 +1,6 @@
 import { authActions, authReducer, AuthStateType } from "./auth-reducer";
 
-const { setUserData } = authActions;
+const { setAuthUserData } = authActions;
 
 let state: AuthStateType;
 
@@ -22,7 +22,7 @@ test("user should be auth", () => {
 
     const { id, email, login } = data;
 
-    const endState = authReducer(state, setUserData(id, email, login));
+    const endState = authReducer(state, setAuthUserData(id, email, login));
 
     expect(endState.userId).toBe(17);
     expect(endState.email).toBe("lala@yandex.ru");
