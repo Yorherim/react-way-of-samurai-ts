@@ -1,6 +1,7 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { compose } from "redux";
 
 import Profile from "./Profile";
 import { AppStateType } from "../../redux/redux-store";
@@ -42,6 +43,10 @@ const MapStateToProps = (state: AppStateType) => ({
     isFetching: state.profilePage.isFetching,
 });
 
-export default connect(MapStateToProps, {
-    getProfileTC,
-})(withAuthRedirect(withRouter(ProfileContainer)));
+export default compose<ComponentType>(
+    connect(MapStateToProps, {
+        getProfileTC,
+    }),
+    withAuthRedirect,
+    withRouter
+)(ProfileContainer);

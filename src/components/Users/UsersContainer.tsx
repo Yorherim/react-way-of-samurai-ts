@@ -1,5 +1,6 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
 
 import Users from "./Users";
 import { AppStateType } from "../../redux/redux-store";
@@ -10,6 +11,7 @@ import {
     usersActions,
 } from "../../redux/reducers/users-reducer";
 import Preloader from "../common/Preloader/Preloader2";
+import { withAuthRedirect } from "../hoc/withAuthRedirect";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = {
@@ -72,9 +74,12 @@ const mapStateToProps = (state: AppStateType) => ({
     followingInProgress: state.usersPage.followingInProgress,
 });
 
-export default connect(mapStateToProps, {
-    changeCurrentPage: usersActions.changeCurrentPage,
-    getUsersTC,
-    followUserTC,
-    unfollowUserTC,
-})(UsersAPIContainer);
+export default compose<ComponentType>(
+    connect(mapStateToProps, {
+        changeCurrentPage: usersActions.changeCurrentPage,
+        getUsersTC,
+        followUserTC,
+        unfollowUserTC,
+    }),
+    withAuthRedirect
+)(UsersAPIContainer);
