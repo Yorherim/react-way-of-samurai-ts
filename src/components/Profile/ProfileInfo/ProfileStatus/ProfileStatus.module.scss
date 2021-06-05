@@ -1,6 +1,10 @@
 .profileStatus {
     margin-top: 10px;
 
+    .isLoading {
+        opacity: 0.5;
+    }
+
     span {
         cursor: pointer;
     }

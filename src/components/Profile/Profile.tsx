@@ -6,12 +6,18 @@ import { ProfileApiGetProfileType } from "../../api/api";
 
 type ProfilePropsType = {
     profile: ProfileApiGetProfileType;
+    status: string;
+    updateStatus: (status: string) => void;
 };
 
-function Profile({ profile }: ProfilePropsType) {
+function Profile({ profile, status, updateStatus }: ProfilePropsType) {
     return (
         <div>
-            <ProfileInfo profile={profile} />
+            <ProfileInfo
+                profile={profile}
+                status={status}
+                updateStatus={updateStatus}
+            />
             <MyPostsContainer />
         </div>
     );

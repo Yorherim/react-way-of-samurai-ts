@@ -96,6 +96,14 @@ export const profileAPI = {
             .get<ProfileApiGetProfileType>(`profile/${userId}`)
             .then((res) => res.data);
     },
+    getStatus(userId: number) {
+        return instance.get(`profile/status/${userId}`).then((res) => res.data);
+    },
+    updateStatus(status: string) {
+        return instance
+            .put(`profile/status`, { status: status })
+            .then((res) => res.data);
+    },
 };
 
 export const authAPI = {

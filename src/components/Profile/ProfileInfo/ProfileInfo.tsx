@@ -8,9 +8,11 @@ import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: ProfileApiGetProfileType;
+    status: string;
+    updateStatus: (status: string) => void;
 };
 
-function ProfileInfo({ profile }: ProfileInfoPropsType) {
+function ProfileInfo({ profile, status, updateStatus }: ProfileInfoPropsType) {
     return (
         <div className={classes.wrapper}>
             <img src={profileWrapper} alt="wrapper" />
@@ -25,7 +27,7 @@ function ProfileInfo({ profile }: ProfileInfoPropsType) {
                 <div>
                     <span>{profile.fullName}</span>
                 </div>
-                <ProfileStatus status={"status"} />
+                <ProfileStatus status={status} updateStatus={updateStatus} />
             </div>
         </div>
     );

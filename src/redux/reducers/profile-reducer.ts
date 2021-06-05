@@ -6,6 +6,7 @@ enum PROFILE_ACTIONS_TYPE {
     UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
     SET_USER_PROFILE = "SET_USER_PROFILE",
     TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING",
+    SET_STATUS = "SET_STATUS",
 }
 
 export type PostType = {
@@ -28,6 +29,7 @@ const initialState = {
     newPostText: "",
     profile: {} as ProfileApiGetProfileType,
     isFetching: false,
+    status: "",
 };
 
 export const profileReducer = (
@@ -50,6 +52,8 @@ export const profileReducer = (
             return { ...state, profile: action.profile };
         case PROFILE_ACTIONS_TYPE.TOGGLE_IS_FETCHING:
             return { ...state, isFetching: action.isFetching };
+        case PROFILE_ACTIONS_TYPE.SET_STATUS:
+            return { ...state, status: action.status };
         default:
             return state;
     }
@@ -72,10 +76,14 @@ export const profileActions = {
         type: PROFILE_ACTIONS_TYPE.TOGGLE_IS_FETCHING as const,
         isFetching,
     }),
+    setStatus: (status: string) => ({
+        type: PROFILE_ACTIONS_TYPE.SET_STATUS as const,
+        status,
+    }),
 };
 
 // ----- thunks -----
-const { toggleIsFetching, setUserProfile } = profileActions;
+const { toggleIsFetching, setUserProfile, setStatus } = profileActions;
 
 export const getProfileTC = (userId: number): ThunkType => async (dispatch) => {
     try {
@@ -83,6 +91,28 @@ export const getProfileTC = (userId: number): ThunkType => async (dispatch) => {
         const data = await profileAPI.getProfile(userId);
         dispatch(toggleIsFetching(false));
         dispatch(setUserProfile(data));
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+
+export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
+    try {
+        const data = await profileAPI.getStatus(userId);
+        dispatch(setStatus(data));
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+
+export const updateStatusTC = (status: string): ThunkType => async (
+    dispatch
+) => {
+    try {
+        const data = await profileAPI.updateStatus(status);
+        if (data.resultCode === 0) {
+            dispatch(setStatus(status));
+        }
     } catch (err) {
         throw new Error(err);
     }
