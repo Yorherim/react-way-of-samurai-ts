@@ -7,7 +7,6 @@ import Profile from "./Profile";
 import { AppStateType } from "../../redux/redux-store";
 import { getProfileTC } from "../../redux/reducers/profile-reducer";
 import Preloader from "../common/Preloader/Preloader2";
-import { withAuthRedirect } from "../hoc/withAuthRedirect";
 
 type PathParamsType = {
     userId: string;
@@ -47,6 +46,5 @@ export default compose<ComponentType>(
     connect(MapStateToProps, {
         getProfileTC,
     }),
-    withAuthRedirect,
     withRouter
 )(ProfileContainer);
