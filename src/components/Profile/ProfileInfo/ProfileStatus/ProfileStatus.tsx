@@ -7,11 +7,22 @@ type ProfileStatusPropsType = {
     updateStatus: (status: string) => void;
 };
 
+type StateType = {
+    editMode: boolean;
+    status: string;
+};
+
 class ProfileStatus extends React.Component<ProfileStatusPropsType> {
-    state = {
+    state: StateType = {
         editMode: false,
         status: this.props.status,
     };
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusPropsType>) {
+        if (prevProps.status !== this.props.status) {
+            this.setState({ status: this.props.status });
+        }
+    }
 
     activateEditMode = () => this.setState({ editMode: true });
     deactivateEditMode = () => {

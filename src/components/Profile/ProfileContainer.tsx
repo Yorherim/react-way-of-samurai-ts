@@ -28,7 +28,7 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
         const { match, profile, getProfileTC, getStatusTC } = this.props;
-        const userId = match.params.userId ? +match.params.userId : 2;
+        const userId = match.params.userId ? +match.params.userId : 15468;
         if (!profile || userId !== profile.userId) {
             getProfileTC(userId);
             getStatusTC(userId);
