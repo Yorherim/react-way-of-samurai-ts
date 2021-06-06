@@ -1,5 +1,5 @@
-import React, { ChangeEvent } from "react";
-import { Redirect } from "react-router-dom";
+import React from "react";
+import { Field, InjectedFormProps, reduxForm } from "redux-form";
 
 import classes from "./Dialogs.module.scss";
 
@@ -7,17 +7,34 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import { DialogsPropsType } from "./DialogsContainer";
 
-function Dialogs({
-    dialogsData,
-    messagesData,
-    newMessageText,
-    addMessage,
-    updateNewMessageText,
-}: DialogsPropsType) {
-    const sendMessage = () => addMessage();
+type DialogsFormDataType = {
+    message: string;
+};
 
-    const onMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewMessageText(e.currentTarget.value);
+const DialogsForm: React.FC<InjectedFormProps<DialogsFormDataType>> = (
+    props
+) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div className={classes.textarea}>
+                <Field
+                    component={"textarea"}
+                    name={"message"}
+                    placeholder={"Enter your message..."}
+                />
+            </div>
+            <button>Add</button>
+        </form>
+    );
+};
+
+const DialogsReduxForm = reduxForm<DialogsFormDataType>({ form: "addMessage" })(
+    DialogsForm
+);
+
+function Dialogs({ dialogsData, messagesData, addMessage }: DialogsPropsType) {
+    const addNewMessage = (formData: DialogsFormDataType) => {
+        addMessage(formData.message);
     };
 
     return (
@@ -32,14 +49,7 @@ function Dialogs({
                 {messagesData.map((m, i) => (
                     <Message key={`${m}_${i}`} message={m.message} />
                 ))}
-
-                <div className={classes.textarea}>
-                    <textarea
-                        onChange={onMessageChange}
-                        value={newMessageText}
-                    />
-                </div>
-                <button onClick={sendMessage}>Add</button>
+                <DialogsReduxForm onSubmit={addNewMessage} />
             </div>
         </div>
     );

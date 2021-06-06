@@ -1,8 +1,5 @@
-import { AppActionsType } from "../redux-store";
-
 enum DIALOGS_ACTIONS_TYPE {
     ADD_MESSAGE = "ADD_MESSAGE",
-    UPDATE_NEW_MESSAGE_TEXT = "UPDATE_NEW_MESSAGE_TEXT",
 }
 export type MessageType = {
     id: number;
@@ -30,7 +27,6 @@ const initialState = {
         { id: 2, message: "Hello" },
         { id: 3, message: "What's up?" },
     ] as MessageType[],
-    newMessageText: "",
 };
 
 export const dialogsReducer = (
@@ -43,12 +39,9 @@ export const dialogsReducer = (
                 ...state,
                 messagesData: [
                     ...state.messagesData,
-                    { id: 6, message: state.newMessageText },
+                    { id: 6, message: action.newMessage },
                 ],
-                newMessageText: "",
             };
-        case DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT:
-            return { ...state, newMessageText: action.messageText };
         default:
             return state;
     }
@@ -56,11 +49,8 @@ export const dialogsReducer = (
 
 // actions creators
 export const dialogsActions = {
-    addMessage: () => ({
+    addMessage: (newMessage: string) => ({
         type: DIALOGS_ACTIONS_TYPE.ADD_MESSAGE as const,
-    }),
-    updateNewMessageText: (messageText: string) => ({
-        type: DIALOGS_ACTIONS_TYPE.UPDATE_NEW_MESSAGE_TEXT as const,
-        messageText,
+        newMessage,
     }),
 };

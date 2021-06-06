@@ -1,35 +1,44 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
+import { Field, InjectedFormProps, reduxForm } from "redux-form";
 
 import classes from "./MyPosts.module.scss";
 
 import Post from "./Post/Post";
 import { MyPostsPropsType } from "./MyPostsContainer";
 
-function MyPosts({
-    postsData,
-    newPostText,
-    addPost,
-    updateNewPostText,
-}: MyPostsPropsType) {
-    const addNewPost = () => {
-        if (newPostText.trim()) {
-            addPost();
-        }
-    };
+type MyPostsFormDataType = {
+    postText: string;
+};
 
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value);
-    };
+const MyPostsForm: React.FC<InjectedFormProps<MyPostsFormDataType>> = (
+    props
+) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <Field
+                    component={"textarea"}
+                    placeholder={"Something write..."}
+                    name={"postText"}
+                />
+            </div>
+            <button>Add post</button>
+        </form>
+    );
+};
+
+const MyPostsReduxForm = reduxForm<MyPostsFormDataType>({ form: "newPost" })(
+    MyPostsForm
+);
+
+function MyPosts({ postsData, addPost }: MyPostsPropsType) {
+    const addNewPost = (formData: MyPostsFormDataType) =>
+        addPost(formData.postText);
 
     return (
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
-            <div>
-                <div>
-                    <textarea onChange={onPostChange} value={newPostText} />
-                </div>
-                <button onClick={addNewPost}>Add post</button>
-            </div>
+            <MyPostsReduxForm onSubmit={addNewPost} />
 
             <div className={classes.posts}>
                 {postsData.map((p, i) => (

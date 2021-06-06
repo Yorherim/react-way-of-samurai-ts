@@ -3,7 +3,6 @@ import { profileAPI, ProfileApiGetProfileType } from "../../api/api";
 
 enum PROFILE_ACTIONS_TYPE {
     ADD_POST = "ADD_POST",
-    UPDATE_NEW_POST_TEXT = "UPDATE_NEW_POST_TEXT",
     SET_USER_PROFILE = "SET_USER_PROFILE",
     TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING",
     SET_STATUS = "SET_STATUS",
@@ -26,7 +25,6 @@ const initialState = {
         { id: 1, message: "Hello", likesCount: 9 },
         { id: 2, message: "Hi", likesCount: 7 },
     ] as PostType[],
-    newPostText: "",
     profile: {} as ProfileApiGetProfileType,
     isFetching: false,
     status: "",
@@ -42,12 +40,9 @@ export const profileReducer = (
                 ...state,
                 postsData: [
                     ...state.postsData,
-                    { id: 5, message: state.newPostText, likesCount: 0 },
+                    { id: 5, message: action.postText, likesCount: 0 },
                 ],
-                newPostText: "",
             };
-        case PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT:
-            return { ...state, newPostText: action.postText };
         case PROFILE_ACTIONS_TYPE.SET_USER_PROFILE:
             return { ...state, profile: action.profile };
         case PROFILE_ACTIONS_TYPE.TOGGLE_IS_FETCHING:
@@ -61,11 +56,8 @@ export const profileReducer = (
 
 // action creators
 export const profileActions = {
-    addPost: () => ({
+    addPost: (postText: string) => ({
         type: PROFILE_ACTIONS_TYPE.ADD_POST as const,
-    }),
-    updateNewPostText: (postText: string) => ({
-        type: PROFILE_ACTIONS_TYPE.UPDATE_NEW_POST_TEXT as const,
         postText,
     }),
     setUserProfile: (profile: ProfileApiGetProfileType) => ({

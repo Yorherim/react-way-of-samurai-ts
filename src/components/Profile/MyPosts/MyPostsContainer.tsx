@@ -5,27 +5,15 @@ import MyPosts from "./MyPosts";
 import { AppStateType } from "../../../redux/redux-store";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
-type MapDispatchToPropsType = typeof mapDispatchToProps;
+type MapDispatchToPropsType = {
+    addPost: (postText: string) => void;
+};
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType;
 
-const { addPost, updateNewPostText } = profileActions;
+const { addPost } = profileActions;
 
 const mapStateToProps = (state: AppStateType) => ({
     postsData: state.profilePage.postsData,
-    newPostText: state.profilePage.newPostText,
 });
 
-const mapDispatchToProps = {
-    addPost,
-    updateNewPostText,
-};
-
-export default connect<
-    MapStateToPropsType,
-    MapDispatchToPropsType,
-    {},
-    AppStateType
->(
-    mapStateToProps,
-    mapDispatchToProps
-)(MyPosts);
+export default connect(mapStateToProps, { addPost })(MyPosts);
