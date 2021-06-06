@@ -1,9 +1,9 @@
+import { ProfileApiGetProfileType } from "../../api/api";
 import {
     profileActions,
     PostType,
     ProfileStateType,
     profileReducer,
-    ProfileType,
 } from "./profile-reducer";
 
 const {
@@ -11,6 +11,7 @@ const {
     updateNewPostText,
     setUserProfile,
     toggleIsFetching,
+    setStatus,
 } = profileActions;
 
 let state: ProfileStateType;
@@ -22,8 +23,9 @@ beforeEach(() => {
             { id: 2, message: "Hi", likesCount: 7 },
         ],
         newPostText: "",
-        profile: {} as ProfileType,
+        profile: {} as ProfileApiGetProfileType,
         isFetching: false,
+        status: "",
     };
 });
 
@@ -49,7 +51,7 @@ test("newPostText should be update", () => {
 });
 
 test("profile user should be set", () => {
-    const data: ProfileType = {
+    const data: ProfileApiGetProfileType = {
         aboutMe: "я круто чувак 1001%",
         contacts: {
             facebook: "facebook.com",
@@ -85,4 +87,9 @@ test("isFetching should be toggle", () => {
 
     const endState2 = profileReducer(endState, toggleIsFetching(false));
     expect(endState2.isFetching).toBeFalsy();
+});
+
+test("status should be changed", () => {
+    const endState = profileReducer(state, setStatus("hello"));
+    expect(endState.status).toBe("hello");
 });
