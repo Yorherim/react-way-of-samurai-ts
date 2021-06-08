@@ -11,7 +11,7 @@ import {
     usersActions,
 } from "../../redux/reducers/users-reducer";
 import Preloader from "../common/Preloader/Preloader2";
-import { withAuthRedirect } from "../hoc/withAuthRedirect";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = {

@@ -87,7 +87,6 @@ export const getProfileTC = (userId: number): ThunkType => async (dispatch) => {
         throw new Error(err);
     }
 };
-
 export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
     try {
         const data = await profileAPI.getStatus(userId);
@@ -96,7 +95,6 @@ export const getStatusTC = (userId: number): ThunkType => async (dispatch) => {
         throw new Error(err);
     }
 };
-
 export const updateStatusTC = (status: string): ThunkType => async (
     dispatch
 ) => {

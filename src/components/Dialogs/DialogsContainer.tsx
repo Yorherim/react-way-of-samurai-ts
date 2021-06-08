@@ -5,7 +5,7 @@ import { compose } from "redux";
 import { dialogsActions } from "../../redux/reducers/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import { AppStateType } from "../../redux/redux-store";
-import { withAuthRedirect } from "../hoc/withAuthRedirect";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = {
