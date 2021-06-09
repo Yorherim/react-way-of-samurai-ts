@@ -2,9 +2,12 @@ import React from "react";
 
 import classes from "./FormControl.module.scss";
 
-type FormsControlType = {};
-
-export function Textarea({ input, meta: { touched, error }, ...props }: any) {
+export function FormControl({
+    input,
+    children,
+    meta: { touched, error },
+    ...props
+}: any) {
     const hasError = touched && error;
 
     return (
@@ -13,8 +16,28 @@ export function Textarea({ input, meta: { touched, error }, ...props }: any) {
                 classes.formControl + " " + (hasError ? classes.error : "")
             }
         >
-            <textarea {...input} {...props} />
+            {children}
             {hasError && <span>{error}</span>}
         </div>
+    );
+}
+
+export function Textarea(props: any) {
+    const { input, meta, children, ...restProps } = props;
+
+    return (
+        <FormControl {...props}>
+            <textarea {...input} {...restProps} />
+        </FormControl>
+    );
+}
+
+export function Input(props: any) {
+    const { input, meta, children, ...restProps } = props;
+
+    return (
+        <FormControl {...props}>
+            <input {...input} {...restProps} />
+        </FormControl>
     );
 }

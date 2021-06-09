@@ -1,11 +1,11 @@
 .formControl {
     &.error {
-        input {
-        }
+        input,
         textarea {
             display: block;
             border: 3px red solid;
         }
+
         span {
             display: block;
             color: red;
