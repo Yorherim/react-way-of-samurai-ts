@@ -10,9 +10,15 @@ type ProfileInfoPropsType = {
     profile: ProfileApiGetProfileType;
     status: string;
     updateStatus: (status: string) => void;
+    isAuth: boolean;
 };
 
-function ProfileInfo({ profile, status, updateStatus }: ProfileInfoPropsType) {
+function ProfileInfo({
+    profile,
+    status,
+    updateStatus,
+    isAuth,
+}: ProfileInfoPropsType) {
     return (
         <div className={classes.wrapper}>
             <img src={profileWrapper} alt="wrapper" />
@@ -27,7 +33,11 @@ function ProfileInfo({ profile, status, updateStatus }: ProfileInfoPropsType) {
                 <div>
                     <span>{profile.fullName}</span>
                 </div>
-                <ProfileStatus status={status} updateStatus={updateStatus} />
+                <ProfileStatus
+                    status={status}
+                    updateStatus={updateStatus}
+                    isAuth={isAuth}
+                />
             </div>
         </div>
     );

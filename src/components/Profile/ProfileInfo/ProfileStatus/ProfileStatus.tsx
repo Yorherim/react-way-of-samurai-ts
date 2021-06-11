@@ -5,6 +5,7 @@ import classes from "./ProfileStatus.module.scss";
 type ProfileStatusPropsType = {
     status: string;
     updateStatus: (status: string) => void;
+    isAuth: boolean;
 };
 
 type StateType = {
@@ -24,7 +25,11 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
         }
     }
 
-    activateEditMode = () => this.setState({ editMode: true });
+    activateEditMode = () => {
+        if (this.props.isAuth) {
+            this.setState({ editMode: true });
+        }
+    };
     deactivateEditMode = () => {
         this.setState({ editMode: false });
         if (this.state.status !== this.props.status) {
@@ -45,6 +50,11 @@ class ProfileStatus extends React.Component<ProfileStatusPropsType> {
                                 this.props.status !== this.state.status
                                     ? classes.isLoading
                                     : ""
+                            }
+                            style={
+                                this.props.isAuth
+                                    ? { cursor: "pointer" }
+                                    : undefined
                             }
                             onClick={this.activateEditMode}
                         >

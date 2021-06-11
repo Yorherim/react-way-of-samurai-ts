@@ -1,6 +1,6 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
-import { reducer as formReducer } from "redux-form";
+import { FormAction, reducer as formReducer } from "redux-form";
 
 import {
     ProfileActionsType,
@@ -36,7 +36,8 @@ export type AppActionsType =
     | UsersActionsTypes
     | DialogsActionsTypes
     | ProfileActionsType
-    | AuthActionsTypes;
+    | AuthActionsTypes
+    | FormAction;
 export type ThunkType = ThunkAction<
     void,
     AppStateType,

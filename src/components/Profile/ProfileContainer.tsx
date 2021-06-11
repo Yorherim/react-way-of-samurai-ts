@@ -1,6 +1,6 @@
 import React, { ComponentType } from "react";
 import { connect } from "react-redux";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Redirect, RouteComponentProps, withRouter } from "react-router-dom";
 import { compose } from "redux";
 
 import Profile from "./Profile";
@@ -27,9 +27,19 @@ type ProfileContainerPropsType = RouteComponentProps<PathParamsType> &
 
 class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     componentDidMount() {
-        const { match, profile, getProfileTC, getStatusTC } = this.props;
-        const userId = match.params.userId ? +match.params.userId : 15468;
-        if (!profile || userId !== profile.userId) {
+        const {
+            match,
+            profile,
+            getProfileTC,
+            getStatusTC,
+            authorizedUserId,
+        } = this.props;
+
+        const userId = match.params.userId
+            ? +match.params.userId
+            : authorizedUserId;
+
+        if (userId && (!profile || userId !== profile.userId)) {
             getProfileTC(userId);
             getStatusTC(userId);
         }
@@ -38,17 +48,20 @@ class ProfileContainer extends React.Component<ProfileContainerPropsType> {
     updateStatus = (status: string) => this.props.updateStatusTC(status);
 
     render() {
-        const { profile, isFetching, status } = this.props;
+        const { profile, isFetching, status, isAuth, match } = this.props;
 
         return (
             <>
-                {isFetching ? (
+                {!isAuth && !match.params.userId ? (
+                    <Redirect to={"/login"} />
+                ) : isFetching ? (
                     <Preloader />
                 ) : (
                     <Profile
                         profile={profile}
                         status={status}
                         updateStatus={this.updateStatus}
+                        isAuth={isAuth}
                     />
                 )}
             </>
@@ -60,6 +73,8 @@ const MapStateToProps = (state: AppStateType) => ({
     profile: state.profilePage.profile,
     isFetching: state.profilePage.isFetching,
     status: state.profilePage.status,
+    isAuth: state.auth.isAuth,
+    authorizedUserId: state.auth.userId,
 });
 
 export default compose<ComponentType>(

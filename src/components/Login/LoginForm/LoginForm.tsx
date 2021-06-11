@@ -1,6 +1,8 @@
 import React from "react";
 import { Field, InjectedFormProps, reduxForm } from "redux-form";
 
+import classes from "../../common/FormsControls/FormControl.module.scss";
+
 import { Input } from "../../common/FormsControls/FormsControl";
 import { requiredField } from "../../../utils/validators/validators";
 
@@ -38,6 +40,9 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                 />{" "}
                 Remember me
             </div>
+            {props.error && (
+                <div className={classes.formSummaryError}>{props.error}</div>
+            )}
             <div>
                 <button>Login</button>
             </div>

@@ -12,7 +12,6 @@ type LoginPropsType = {
 
 function Login({ login }: LoginPropsType) {
     const onSubmit = ({ email, password, rememberMe }: FormDataType) => {
-        console.log("onSubmit working");
         login(email, password, rememberMe);
     };
 

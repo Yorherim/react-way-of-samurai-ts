@@ -1,5 +1,6 @@
 import { ThunkType } from "../redux-store";
 import { authAPI } from "../../api/api";
+import { stopSubmit } from "redux-form";
 
 enum AUTH_ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
@@ -72,6 +73,12 @@ export const loginTC = (
         const data = await authAPI.login(email, password, rememberMe);
         if (data.resultCode === 0) {
             dispatch(getAuthUserDataTC());
+        } else {
+            const errorMessage =
+                data.messages.length > 0
+                    ? data.messages[0]
+                    : "Something wrong...";
+            dispatch(stopSubmit("login", { _error: errorMessage }));
         }
     } catch (err) {
         throw new Error(err);
