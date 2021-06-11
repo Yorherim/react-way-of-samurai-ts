@@ -8,4 +8,4 @@ export { default as Music } from "./Music/Music";
 export { default as DialogsContainer } from "./Dialogs/DialogsContainer";
 export { default as UsersContainer } from "./Users/UsersContainer";
 export { default as ProfileContainer } from "./Profile/ProfileContainer";
-export { default as Login } from "./Login/Login";
+export { default as LoginContainer } from "./Login/LoginContainer";

@@ -29,8 +29,7 @@ export const authReducer = (
         case AUTH_ACTIONS_TYPE.SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAuth: true,
+                ...action.payload,
             };
         default:
             return state;
@@ -39,9 +38,14 @@ export const authReducer = (
 
 // actions creators
 export const authActions = {
-    setAuthUserData: (userId: number, email: string, login: string) => ({
+    setAuthUserData: (
+        userId: number | null,
+        email: string | null,
+        login: string | null,
+        isAuth: boolean
+    ) => ({
         type: AUTH_ACTIONS_TYPE.SET_USER_DATA as const,
-        data: { userId, email, login },
+        payload: { userId, email, login, isAuth },
     }),
 };
 
@@ -53,7 +57,31 @@ export const getAuthUserDataTC = (): ThunkType => async (dispatch) => {
         const data = await authAPI.me();
         if (data.resultCode === 0) {
             const { id, email, login } = data.data;
-            dispatch(setAuthUserData(id, email, login));
+            dispatch(setAuthUserData(id, email, login, true));
+        }
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+export const loginTC = (
+    email: string,
+    password: string,
+    rememberMe: boolean | undefined
+): ThunkType => async (dispatch) => {
+    try {
+        const data = await authAPI.login(email, password, rememberMe);
+        if (data.resultCode === 0) {
+            dispatch(getAuthUserDataTC());
+        }
+    } catch (err) {
+        throw new Error(err);
+    }
+};
+export const logoutTC = (): ThunkType => async (dispatch) => {
+    try {
+        const data = await authAPI.logout();
+        if (data.resultCode === 0) {
+            dispatch(setAuthUserData(null, null, null, false));
         }
     } catch (err) {
         throw new Error(err);

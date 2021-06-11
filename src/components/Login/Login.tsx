@@ -2,9 +2,18 @@ import React from "react";
 
 import { FormDataType, LoginReduxForm } from "./LoginForm/LoginForm";
 
-function Login() {
-    const onSubmit = (formData: FormDataType) => {
-        console.log(formData);
+type LoginPropsType = {
+    login: (
+        email: string,
+        password: string,
+        rememberMe: boolean | undefined
+    ) => void;
+};
+
+function Login({ login }: LoginPropsType) {
+    const onSubmit = ({ email, password, rememberMe }: FormDataType) => {
+        console.log("onSubmit working");
+        login(email, password, rememberMe);
     };
 
     return (
