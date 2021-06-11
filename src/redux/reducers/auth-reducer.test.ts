@@ -22,7 +22,10 @@ test("user should be auth", () => {
 
     const { id, email, login } = data;
 
-    const endState = authReducer(state, setAuthUserData(id, email, login));
+    const endState = authReducer(
+        state,
+        setAuthUserData(id, email, login, true)
+    );
 
     expect(endState.userId).toBe(17);
     expect(endState.email).toBe("lala@yandex.ru");

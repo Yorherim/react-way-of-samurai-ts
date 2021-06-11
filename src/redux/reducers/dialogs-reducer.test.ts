@@ -5,7 +5,7 @@ import {
     MessageType,
 } from "./dialogs-reducer";
 
-const { addMessage, updateNewMessageText } = dialogsActions;
+const { addMessage } = dialogsActions;
 
 let state: DialogsPageType;
 
@@ -22,26 +22,15 @@ beforeEach(() => {
             { id: 2, message: "Hello" },
             { id: 3, message: "What's up?" },
         ],
-        newMessageText: "",
     };
 });
 
 test("new message should be added", () => {
     const newMessage: MessageType = { id: 6, message: "ratata" };
-    state.newMessageText = newMessage.message;
 
-    const endState = dialogsReducer(state, addMessage());
+    const endState = dialogsReducer(state, addMessage("ratata"));
 
     expect(endState.messagesData.length).toBe(4);
-    expect(endState.newMessageText).toBe("");
     expect(endState.messagesData[3].id).toBe(6);
     expect(endState.messagesData[3].message).toBe("ratata");
-});
-
-test("newMessageText should be update", () => {
-    const newMessage = "ra";
-
-    const endState = dialogsReducer(state, updateNewMessageText(newMessage));
-
-    expect(endState.newMessageText).toBe("ra");
 });
