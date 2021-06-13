@@ -1,6 +1,7 @@
 import { ThunkType } from "../redux-store";
 import { authAPI } from "../../api/api";
 import { stopSubmit } from "redux-form";
+import { getProfileTC, getStatusTC } from "./profile-reducer";
 
 enum AUTH_ACTIONS_TYPE {
     SET_USER_DATA = "SET_USER_DATA",
@@ -59,6 +60,8 @@ export const getAuthUserDataTC = (): ThunkType => async (dispatch) => {
         if (data.resultCode === 0) {
             const { id, email, login } = data.data;
             dispatch(setAuthUserData(id, email, login, true));
+            await dispatch(getProfileTC(id));
+            await dispatch(getStatusTC(id));
         }
     } catch (err) {
         throw new Error(err);

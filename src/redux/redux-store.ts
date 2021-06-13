@@ -15,6 +15,10 @@ import {
     usersReducer as usersPage,
 } from "./reducers/users-reducer";
 import { AuthActionsTypes, authReducer as auth } from "./reducers/auth-reducer";
+import {
+    AppReducerActionsTypes,
+    appReducer as app,
+} from "./reducers/app-reducer";
 
 declare global {
     interface Window {
@@ -29,6 +33,7 @@ const rootReducer = combineReducers({
     usersPage,
     auth,
     form: formReducer,
+    app,
 });
 
 export type AppStateType = ReturnType<typeof rootReducer>;
@@ -37,7 +42,8 @@ export type AppActionsType =
     | DialogsActionsTypes
     | ProfileActionsType
     | AuthActionsTypes
-    | FormAction;
+    | FormAction
+    | AppReducerActionsTypes;
 export type ThunkType = ThunkAction<
     void,
     AppStateType,

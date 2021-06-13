@@ -11,7 +11,6 @@ import {
     usersActions,
 } from "../../redux/reducers/users-reducer";
 import Preloader from "../common/Preloader/Preloader2";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = {
@@ -80,6 +79,5 @@ export default compose<ComponentType>(
         getUsersTC,
         followUserTC,
         unfollowUserTC,
-    }),
-    withAuthRedirect
+    })
 )(UsersAPIContainer);
