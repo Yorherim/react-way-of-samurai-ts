@@ -11,6 +11,14 @@ import {
     usersActions,
 } from "../../redux/reducers/users-reducer";
 import Preloader from "../common/Preloader/Preloader2";
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers,
+} from "../../redux/selectors/user-selectors";
 
 type MapStateToPropsType = ReturnType<typeof mapStateToProps>;
 type MapDispatchToPropsType = {
@@ -65,12 +73,12 @@ class UsersAPIContainer extends React.Component<UsersAPIContainerPropsType> {
 }
 
 const mapStateToProps = (state: AppStateType) => ({
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching,
-    followingInProgress: state.usersPage.followingInProgress,
+    users: getUsers(state),
+    pageSize: getPageSize(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
+    followingInProgress: getFollowingInProgress(state),
 });
 
 export default compose<ComponentType>(
